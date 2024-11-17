@@ -1,8 +1,7 @@
 > [Link](https://oj.vnoi.info/problem/olp_kc23_triangle)
 
 ## Vietnam
-
-Có thể cá nhân mình thấy tuy chỉ mới là bài toán mở đầu và là bài toán dễ, nhưng nó đã làm khó những bạn nào (như mình) không kỹ càng trong việc sử dụng các giới hạn dữ liệu cũng như về việc xử lý số thực. Do đó, nếu trong phòng thi ta không biết dùng trick này, đây có thể sẽ là 1 bài gây cảm giác ức chế và có thể làm xuống tinh thần của người làm. 
+Cá nhân mình thấy tuy chỉ mới là bài toán mở đầu và là bài toán dễ, nhưng nó đã làm khó những bạn nào (như mình) không kỹ càng trong việc sử dụng các giới hạn dữ liệu cũng như về việc xử lý số thực. Do đó, nếu trong phòng thi ta không biết dùng trick này, đây có thể sẽ là 1 bài gây cảm giác ức chế và có thể làm xuống tinh thần của người làm. 
 
 Ta chỉ cần biết một chút kiến thức về diện tích tam giác cũng như định lý Pytago là xong. 
 
@@ -19,6 +18,14 @@ Vì đáp án ta cần là d * d và d = căn (u * u + v * v), do đó, thực t
 Vậy còn chuyện xuất ra số thực dưới dạng 2 chữ số thập phân thì sao, mình đã dùng 1 trick đó là xuất ra d * d / 4 và đặt 1 số dư là d * d % 4
 
 Sau đó sẽ kiểm tra số dư, nếu là 0 thì xuất .00, là 1 thì xuất .25, là 2 thì xuất .50 và là 3 thì xuất .75
+
+
+
+## English
+
+
+
+## Chinese
 
 ---
 
