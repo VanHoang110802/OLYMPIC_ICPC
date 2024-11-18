@@ -1,6 +1,6 @@
 > [Link](https://oj.vnoi.info/problem/olp_kc23_triangle)
 
-## Vietnam
+## Tiếng Việt
 Cá nhân mình thấy tuy chỉ mới là bài toán mở đầu và là bài toán dễ, nhưng nó đã làm khó những bạn nào (như mình) không kỹ càng trong việc sử dụng các giới hạn dữ liệu cũng như về việc xử lý số thực. Do đó, nếu trong phòng thi ta không biết dùng trick này, đây có thể sẽ là 1 bài gây cảm giác ức chế và có thể làm xuống tinh thần của người làm. 
 
 Ta chỉ cần biết một chút kiến thức về diện tích tam giác cũng như định lý Pytago là xong. 
@@ -39,7 +39,25 @@ So what about outputting a floating-point number with two decimal places? I used
 
 Then, check the remainder. If it's 0, output .00; if it's 1, output .25; if it's 2, output .50; and if it's 3, output .75.
 
-## Chinese
+## Chinese (简体中文)
+
+我个人认为，虽然这只是一个开头的题目，而且它是一个简单的题目，但它却让那些（像我一样）在使用数据限制和处理浮点数时不够细心的人感到困难。因此，如果在考试中我们不知道使用这个技巧，这可能会成为一个让人感到不舒服的题目，并且可能会打击解题者的士气。
+
+我们只需要了解一点关于三角形面积的知识以及毕达哥拉斯定理就可以了。
+
+然而，在这个题目中，如果你通过浮点数处理来计算并输出答案，很可能你无法完全通过所有测试用例。
+
+这道题的公式如下：d = sqrt(u * u + v * v),，答案是 d * d / 4。
+
+然而，我们可以看到，如果我们取 d = sqrt(u * u + v * v)，那么 d 将是一个浮点数，然后再对其平方，误差将会加倍。特别是当 u 和 v 的最大值为 20 亿时。
+
+在所有的题目中，如果我们使用浮点数处理，通常都不如使用整数处理好，因为整数可以保证 100% 的精确度。
+
+因为我们需要的答案是 d * d 且 d = sqr(u * u + v * v)，因此我们可以得到 d * d = u * u + v * v（d * d 是一个整数）。
+
+那么输出一个保留两位小数的浮点数该怎么办呢？我使用了一个技巧，就是输出 d * d / 4，并设置一个余数为 d * d % 4
+
+然后检查余数，如果是 0 就输出 .00；如果是 1 就输出 .25；如果是 2 就输出 .50；如果是 3 就输出 .75。
 
 ---
 
