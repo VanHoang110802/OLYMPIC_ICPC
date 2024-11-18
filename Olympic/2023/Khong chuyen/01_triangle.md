@@ -21,7 +21,7 @@ Sau đó sẽ kiểm tra số dư, nếu là 0 thì xuất .00; là 1 thì xuấ
 
 
 ## English
-Personally, I find that although this is just an introductory problem and an easy one at that, it can be challenging for those who, like me, are not meticulous in handling data constraints and dealing with floating-point numbers. Therefore, if we don’t know how to use this trick during the exam, this problem could become frustrating and potentially dampen the solver’s morale.
+Personally, I find that although this is just an introductory problem and an easy one at that, it can be challenging for those who (like me) are not meticulous in handling data constraints and dealing with floating-point numbers. Therefore, if we don’t know how to use this trick during the exam, this problem could become frustrating and potentially dampen the solver’s morale.
 
 We only need a bit of knowledge about triangle area and the Pythagorean theorem, and that's it!
 
