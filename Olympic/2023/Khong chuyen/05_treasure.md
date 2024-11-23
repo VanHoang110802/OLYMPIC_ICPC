@@ -136,9 +136,9 @@ using namespace std;
 #define S second
 int x[100007], y[100007];
 int n, s;
-#define pii pair<int, int>
 
-/**map <pii, int> mp;
+/**#define pii pair<int, int>
+map <pii, int> mp;
 
 int Cnt(int a, int b)
 {
