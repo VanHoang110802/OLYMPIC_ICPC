@@ -15,103 +15,62 @@
 ## Chưa AC
 
 ```cpp
-
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-// Thuật toán Euclid tính ước chung lớn nhất
-int gcd(int a, int b)
-{
-    a = abs(a);
-    b = abs(b);
+#define int long long
+#define endl '\n'
 
-    // Đảm bảo a >= b
-    if (b > a)
-    {
-        swap(a, b);
-    }
+const int maxn=1000000+10;
 
-    int temp;
-    while (b > 0)
-    {
-        temp = b;
-        b = a % b;
-        a = temp;
-    }
-    return a;
+int is_prime[maxn]={0};
+int d[maxn];
+int ntest;
+int n;
+int a[maxn],b[maxn];
+
+void Sang(){
+    for(int i=2;i<=1000;i++)
+        if (is_prime[i]==0)
+            for(int j=i*i;j<=1000000;j+=i)
+                is_prime[j]=i;
+    for(int i=1;i<=1000000;i++)
+        if (is_prime[i]==0) is_prime[i]=i;
 }
 
-string decimalization(int p, int q)
-{
-
-    q = abs(q);
-    p = abs(p);
-
-    p %= q;
-
-    if (p)   // Nếu chia dư, tính phần thập phân
-    {
-
-        int g = gcd(p, q);
-        p /= g, q /= g;
-
-        deque<int> remain; // Lưu các số dư, có thể dùng STL set để cho cải thiện tốc độ tìm kiếm
-        deque<char> dec;    // Lưu các chữ số thập phân,
-        remain.push_back(p);
-
-        deque<int>::iterator ri = remain.end();
-        while (p)
-        {
-            p *= 10;
-            dec.push_back(p / q + '0');
-            p %= q;
-            ri = find(remain.begin(), remain.end(), p); // Tìm xem phần dư hiện tại có được lặp lại hay không ?
-
-            if (ri == remain.end())
-            {
-                // Nếu không thì thêm số dư hiện tại vào deque
-                remain.push_back(p);
-            }
-            else
-            {
-                // Nếu có thì kết thúc phần tuần hoàn
-                break;
-            }
-        }
-
-        deque<char>::iterator begin_sequence = dec.begin() + (ri - remain.begin());
-
-        // Phần không tuần hoàn
-
-
-
-        // Phần tuần hoàn
-        if (begin_sequence != dec.end())
-        {
-            return "repeating\n";
-        }
-        else return "finite\n";
+void PhanTich(int n,int val){
+    while(n>1){
+        d[is_prime[n]]+=val;
+        n=n/is_prime[n];
     }
-    else return "finite\n";
 }
 
-int main()
-{
-    int t;
-    cin >> t;
-    while(t--)
-    {
-        int n;
-        cin >> n;
-        vector <int> a(n+1, 1);
-        vector <int> b(n+1, 1);
-        int x = n % 10;
-        for(int i=0; i<x; ++i) cin >> a[i];
-        for(int i=0; i<x; ++i) cin >> b[i];
-        for(int i=0; i<x; ++i)
-        {
-            cout << decimalization(a[i] * a[i+1], b[i] * b[i+1]);
+bool Checker(){
+    for(int i=2;i<=1000000;i++)
+        if (is_prime[i]==i && i!=2 && i!=5 && d[i]<0){
+            // cout<<"Checker "<<i<<" success"<<endl;
+            return true;
         }
+    return false;
+}
+
+int32_t main()
+{
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    Sang();
+    cin>>ntest;
+    for(int nt=1;nt<=ntest;nt++){
+        cin>>n;
+        for(int i=1;i<=n;i++) cin>>a[i];
+        for(int i=1;i<=n;i++) cin>>b[i];
+        for(int i=1;i<=1000000;i++) d[i]=0;
+        for(int i=1;i<=n;i++) PhanTich(a[i],1);
+        for(int i=1;i<=n;i++) PhanTich(b[i],-1);
+        // Số thập phân hữu hạn khi nào?
+        // Số thập phân vô hạn khi nào? Mẫu số có số nguyên tố khác 2 hoặc 5
+        if (Checker()) cout<<"repeating"<<endl;
+        else cout<<"finite"<<endl;
     }
     return 0;
 }
+
 ```
