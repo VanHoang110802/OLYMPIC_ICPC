@@ -15,61 +15,64 @@
 ## Số học
 
 ```cpp
-#include<bits/stdc++.h>
+/*
+- Nếu một phân số tối giản với mẫu dương mà mẫu không có ước nguyên tố khác 2 và 5 thì phân số đó viết được dưới dạng số thập phân hữu hạn.
+- Nếu một phân số tối giản với mẫu dương mà mẫu có ước nguyên tố khác 2 và 5 thì phân số đó viết được dưới dạng số thập phân vô hạn tuần hoàn.
+*/
+
+
+#include <iostream>
+#include <algorithm>
 using namespace std;
-#define int long long
-#define endl '\n'
+using ull = unsigned long long;
 
-const int maxn=1000000+10;
+#pragma GCC target("avx2")
+#pragma GCC optimization("O2")
+#pragma GCC optimization("O3")
+#pragma GCC optimize("Ofast")
 
-int is_prime[maxn]={0};
-int d[maxn];
-int ntest;
 int n;
-int a[maxn],b[maxn];
+ull a[1000005], b[1000005];
 
-void Sang(){
-    for(int i=2;i<=1000;i++)
-        if (is_prime[i]==0)
-            for(int j=i*i;j<=1000000;j+=i)
-                is_prime[j]=i;
-    for(int i=1;i<=1000000;i++)
-        if (is_prime[i]==0) is_prime[i]=i;
-}
-
-void PhanTich(int n,int val){
-    while(n>1){
-        d[is_prime[n]]+=val;
-        n=n/is_prime[n];
-    }
-}
-
-bool Checker(){
-    for(int i=2;i<=1000000;i++)
-        if (is_prime[i]==i && i!=2 && i!=5 && d[i]<0){
-            // cout<<"Checker "<<i<<" success"<<endl;
-            return true;
-        }
-    return false;
-}
-
-int32_t main()
+void solve()
 {
-    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-    Sang();
-    cin>>ntest;
-    for(int nt=1;nt<=ntest;nt++){
-        cin>>n;
-        for(int i=1;i<=n;i++) cin>>a[i];
-        for(int i=1;i<=n;i++) cin>>b[i];
-        for(int i=1;i<=1000000;i++) d[i]=0;
-        for(int i=1;i<=n;i++) PhanTich(a[i],1);
-        for(int i=1;i<=n;i++) PhanTich(b[i],-1);
-        // Số thập phân hữu hạn khi nào?
-        // Số thập phân vô hạn khi nào? Mẫu số có số nguyên tố khác 2 hoặc 5
-        if (Checker()) cout<<"repeating"<<endl;
-        else cout<<"finite"<<endl;
+    cin >> n;
+    for(int i = 1; i <= n; ++i)
+        cin >> a[i];
+
+    for(int i = 1; i <= n; ++i)
+        cin >> b[i];
+
+    ull ts = 1, ms = 1;
+    for(int i = 1; i <= n; ++i)
+    {
+        ts *= a[i];
+        ms *= b[i];
+
+        ull gcd = __gcd(ts, ms);
+        ts /= gcd;
+        ms /= gcd;
+
+        if (ms == 0)
+        {
+            cout << "repeating\n";
+            return;
+        }
     }
+    while(ms % 2 == 0)
+        ms /= 2;
+
+    while(ms % 5 == 0)
+        ms /= 5;
+
+    cout << ((ms == 1) ? "finite\n" : "repeating\n");
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    int testcase; cin >> testcase;
+    while(testcase--) solve();
     return 0;
 }
 
