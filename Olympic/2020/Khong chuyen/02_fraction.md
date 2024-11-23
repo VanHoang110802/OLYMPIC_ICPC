@@ -12,7 +12,7 @@
 
 ---
 
-## Chưa AC
+## Số học
 
 ```cpp
 #include<bits/stdc++.h>
