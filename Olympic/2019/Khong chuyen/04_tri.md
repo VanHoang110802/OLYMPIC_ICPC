@@ -12,6 +12,8 @@
 
 ---
 
+## Min - max trong đoạn định tiến
+
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -57,6 +59,8 @@ int main()
     return 0;
 }
 ```
+
+## Mảng cộng dồn + Segment tree
 
 ```cpp
 #include <bits/stdc++.h>
@@ -118,6 +122,8 @@ int main()
 }
 
 ```
+
+## Mảng cộng dồn + Chặt nhị phân
 
 ```cpp
 #include<bits/stdc++.h>
