@@ -12,7 +12,7 @@
 
 ---
 
-## Mảng cộng dồn + Chặt nhị phân
+## Mảng cộng dồn + Mảng hiệu + Chặt nhị phân
 
 ```cpp
 #include<bits/stdc++.h>
