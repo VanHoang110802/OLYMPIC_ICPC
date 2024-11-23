@@ -149,8 +149,14 @@ void down(int id, int l, int r)
 
 void update(int id, int l, int r, int i, int j, int x)
 {
-    if (lazy[id] != 1000000007) down(id, l, r);
-    if (l > j || r < i) return;
+    if (lazy[id] != 1000000007)
+    {
+        down(id, l, r);
+    }
+    if (l > j || r < i)
+    {
+        return;
+    }
     if (l >= i && r <= j)
     {
         lazy[id] = x;
@@ -168,9 +174,18 @@ int get(int id, int l, int r, int x)
 {
     if (l == r) return l;
     int mid = (l + r) >> 1;
-    if (lazy[id] != 1000000007) down(id, l, r);
-    if (lazy[2 * id] != 1000000007) down(2 * id, l, mid);
-    if (st[2 * id] > x) return get(2 * id, l, mid, x);
+    if (lazy[id] != 1000000007)
+    {
+        down(id, l, r);
+    }
+    if (lazy[2 * id] != 1000000007)
+    {
+        down(2 * id, l, mid);
+    }
+    if (st[2 * id] > x)
+    {
+        return get(2 * id, l, mid, x);
+    }
 
     return get(2 * id + 1, mid + 1, r, x);
 }
@@ -179,8 +194,15 @@ int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
     cin >> n;
-    for(int i = 1; i <= n; ++i) cin >> a[i];
-    for(int i = 1; i <= 4 * n; ++i) st[i] = 1000000007, lazy[i] = 1000000007;
+    for(int i = 1; i <= n; ++i)
+    {
+        cin >> a[i];
+    }
+    for(int i = 1; i <= 4 * n; ++i)
+    {
+        st[i] = 1000000007;
+        lazy[i] = 1000000007;
+    }
     for(int i = 1; i <= n; ++i)
     {
         int j = get(1, 1, n, a[i]);
@@ -188,7 +210,10 @@ int main()
         f[i] = f[j - 1] + (i - j + 1) * 1ll * a[i];
     }
     reverse(a + 1, a + n + 1);
-    for(int i = 1; i <= 4 * n; ++i) st[i] = lazy[i] = 1000000007;
+    for(int i = 1; i <= 4 * n; ++i)
+    {
+        st[i] = lazy[i] = 1000000007;
+    }
     for(int i = 1; i <= n; ++i)
     {
         int j = get(1, 1, n, a[i]);
@@ -203,4 +228,5 @@ int main()
     cout << ans;
     return 0;
 }
+
 ```
