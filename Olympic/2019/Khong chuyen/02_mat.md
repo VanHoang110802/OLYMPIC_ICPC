@@ -12,6 +12,8 @@
 
 ---
 
+## Xử lý số mod + Duyệt
+
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -71,6 +73,7 @@ int main()
 }
 ```
 
+## Xử lý mũ với mod + Duyệt
 ```cpp
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx2")
