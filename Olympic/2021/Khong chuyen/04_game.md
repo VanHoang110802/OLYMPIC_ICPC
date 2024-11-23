@@ -15,37 +15,34 @@
 ## CTDL + QHD
 
 ```cpp
-#include <bits/stdc++.h>
+#include <iostream>
+#include <stack>
 using namespace std;
+using LL = long long;
 
-#define endl '\n'
-#define ll long long
-#define int long long
-const int inf = 1e9 + 7;
-const ll infll = 1e18 + 7;
-const int max5 = 1e5 + 7;
-const int max6 = 1e6 + 7;
-const int MOD = 998244353;
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2")
 
-int32_t main()
+LL a[511111], f[511111], ff[511111], dp1[511111], dp2[511111];
+int near1[511111], near2[511111];
+
+int main()
 {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
     int n;
     cin >> n;
-    int inp[n + 2] = {};
+
     for (int i = 1; i <= n; ++i)
     {
-        cin >> inp[i];
+        cin >> a[i];
     }
-    ll f[n + 2] = {};
-    ll ff[n + 2] = {};
-    int near1[n + 2] = {};
-    int near2[n + 2] = {};
+
     stack<int> st;
     for (int i = 1; i <= n; ++i)
     {
-        f[i] = f[i - 1] + inp[i];
-        while (!st.empty() && inp[st.top()] >= inp[i])
+        f[i] = f[i - 1] + a[i];
+        while (!st.empty() && a[st.top()] >= a[i])
         {
             st.pop();
         }
@@ -56,8 +53,8 @@ int32_t main()
     stack<int> stt;
     for (int i = n; i >= 1; --i)
     {
-        ff[i] = ff[i + 1] + inp[i];
-        while (!stt.empty() && inp[stt.top()] >= inp[i])
+        ff[i] = ff[i + 1] + a[i];
+        while (!stt.empty() && a[stt.top()] >= a[i])
         {
             stt.pop();
         }
@@ -65,43 +62,40 @@ int32_t main()
         else near2[i] = stt.top();
         stt.push(i);
     }
-    ll dp1[n + 2] = {};
-    ll dp2[n + 2] = {};
+
     for (int i = 1; i <= n; ++i)
     {
         if (near1[i] == 0)
         {
-            dp1[i] = (i - 1) * inp[i];
+            dp1[i] = (i - 1) * a[i];
         }
         else
         {
-            dp1[i] = dp1[near1[i]] + inp[near1[i]] + (i - near1[i] - 1) * inp[i];
+            dp1[i] = dp1[near1[i]] + a[near1[i]] + (i - near1[i] - 1) * a[i];
         }
     }
     for (int i = n; i >= 1; --i)
     {
         if (near2[i] == 0)
         {
-            dp2[i] = (n - i) * inp[i];
+            dp2[i] = (n - i) * a[i];
         }
         else
         {
-            dp2[i] = dp2[near2[i]] + inp[near2[i]] + (near2[i] - i - 1) * inp[i];
+            dp2[i] = dp2[near2[i]] + a[near2[i]] + (near2[i] - i - 1) * a[i];
         }
     }
-    ll ans = 0;
+    LL ans = 0;
     for (int i = 1; i <= n; ++i)
     {
-        ll num = 0;
+        LL num = 0;
         num += dp1[i];
         num += dp2[i];
-        num += inp[i];
+        num += a[i];
         ans = max(ans, num);
     }
     cout << ans;
 
     return 0;
 }
-
-
 ```
