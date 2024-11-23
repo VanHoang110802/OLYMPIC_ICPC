@@ -172,7 +172,6 @@ signed main()
     for (int i = 0; i < n; i++)
     {
         cin >> x[i] >> y[i];
-        ///mp[{x[i], y[i]}]++;
         v.push_back({x[i], y[i]});
         mp[y[i]].push_back(x[i]);
     }
