@@ -16,8 +16,10 @@
 
 ```cpp
 /*
-- Nếu một phân số tối giản với mẫu dương mà mẫu không có ước nguyên tố khác 2 và 5 thì phân số đó viết được dưới dạng số thập phân hữu hạn.
-- Nếu một phân số tối giản với mẫu dương mà mẫu có ước nguyên tố khác 2 và 5 thì phân số đó viết được dưới dạng số thập phân vô hạn tuần hoàn.
+- Nếu một phân số tối giản với mẫu dương mà mẫu không có ước nguyên tố khác 2 và 5
+thì phân số đó viết được dưới dạng số thập phân hữu hạn.
+- Nếu một phân số tối giản với mẫu dương mà mẫu có ước nguyên tố khác 2 và 5
+thì phân số đó viết được dưới dạng số thập phân vô hạn tuần hoàn.
 */
 
 
