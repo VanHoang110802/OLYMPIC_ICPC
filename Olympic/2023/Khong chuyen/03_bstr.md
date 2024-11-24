@@ -57,7 +57,7 @@ int main()
 }
 ```
 
-## Duyệt + Xử lý mảng
+## Segment tree + Xử lý mảng
 
 ```cpp
 #include <iostream>
