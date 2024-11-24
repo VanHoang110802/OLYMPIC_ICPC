@@ -57,7 +57,7 @@ Then, check the remainder. If it's 0, output .00; if it's 1, output .25; if it's
 
 然后检查余数，如果是 0 就输出 .00；如果是 1 就输出 .25；如果是 2 就输出 .50；如果是 3 就输出 .75。
 
----
+## Code
 
 ```cpp
 #include<bits/stdc++.h>
