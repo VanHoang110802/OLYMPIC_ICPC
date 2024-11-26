@@ -83,63 +83,74 @@ int main()
 }
 ```
 
+## Segment tree + Chặt nhị phân
+
 ```cpp
 #include <bits/stdc++.h>
+#define ll long long
+#define x first
+#define y second
 using namespace std;
-using ll = long long;
-
-const int N = 1e5 + 5;
-int n, a[N], b[N];
-int pref_max[N], suf_max[N];
 ll m;
-
+long n,a[100005],f[400005];
+void build(long id, long l, long r)
+{
+    if( l == r )
+    {
+        f[id] = a[l];
+        return;
+    }
+    long mid = ( l + r ) / 2;
+    build(id*2,l,mid);
+    build(id*2+1,mid+1,r);
+    f[id] = max(f[id*2],f[id*2+1]);
+}
+long get(long id, long l, long r, long u, long v)
+{
+    if( r < u || l > v ) return 0;
+    if( u <= l && r <= v ) return f[id];
+    long mid = ( l + r ) / 2;
+    return max(get(id*2,l,mid,u,v),get(id*2+1,mid+1,r,u,v));
+}
+bool check(long x)
+{
+    ll res = 0;
+    for(long i = 2; i <= n - 1; i++)
+    {
+        long l = get(1,1,n,1,i - 1);
+        long r = get(1,1,n,i + 1,n);
+        if( a[i] > l || a[i] > r ) continue;
+        if( l <= x || r <= x ) continue;
+        //cout << i << ' ' <<  l << ' ' << r << '\n';
+        res += min(l,r) - max(x,a[i]);
+    }
+    //cout << res << '\n';
+    if (res >= m) return true;
+    return false;
+}
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-
+    ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
     cin >> n >> m;
-    for (int i = 1; i <= n; ++i)
+    for(long i = 1; i <= n; i++) cin >> a[i];
+    build(1,1,n);
+    long l = 0, r = get(1,1,n,1,n), mid = ( l + r ) / 2;
+    //cout << check(2);
+    while( r - l > 3 )
     {
-        cin >> a[i];
+        if( check(mid) ) l = mid;
+        else r = mid;
+        mid = ( l + r ) / 2;
     }
-
-    int lt = 1, rt = 2e9, ans = -1;
-    while (lt <= rt)
+    for(long i = r; i >= l; i--)
     {
-        int md = (lt + rt) / 2;
-        for (int i = 1; i <= n; ++i)
+        if( check(i) )
         {
-            b[i] = max(a[i], md);
-        }
-        for (int i = 1; i <= n; ++i)
-        {
-            pref_max[i] = max(pref_max[i - 1], b[i]);
-        }
-        for (int i = n; i >= 1; --i)
-        {
-            suf_max[i] = max(suf_max[i + 1], b[i]);
-        }
-
-        ll total = 0;
-        for (int i = 1; i <= n; ++i)
-        {
-            total += max(0, min(pref_max[i - 1], suf_max[i + 1]) - b[i]);
-            if (total >= m) break;
-        }
-
-        if (total >= m)
-        {
-            ans = md;
-            lt = md + 1;
-        }
-        else
-        {
-            rt = md - 1;
+            cout << i;
+            return 0;
         }
     }
-    cout << ans << '\n';
-
-    return 0;
+    cout << -1;
 }
+
 ```
