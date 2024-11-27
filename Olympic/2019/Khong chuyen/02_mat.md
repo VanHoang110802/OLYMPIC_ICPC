@@ -10,8 +10,6 @@
 
 
 
----
-
 ## Code (Dạng: Xử lý mũ với mod + duyệt)
 ```cpp
 #pragma GCC optimize("O3,unroll-loops")
