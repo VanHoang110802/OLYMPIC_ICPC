@@ -12,7 +12,7 @@
 
 ---
 
-## Segment tree
+## Code: (Dạng Segment tree + số học)
 
 ```cpp
 #include <bits/stdc++.h>
@@ -83,55 +83,6 @@ int32_t main()
 {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     XuLy();
-    return 0;
-}
-```
-
-## Sparse table
-
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
-long long a[100007], b[100007];
-long long f[20][100007];
-int n, k;
-
-long long get(int l, int r)
-{
-    int k = log2(r - l + 1);
-    return __gcd(f[k][l], f[k][r - (1 << k) + 1]);
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-    cin >> n >> k;
-    for(int i = 1; i <= n; i++)
-    {
-        cin >> a[i];
-    }
-    for(int i = 1; i <= n; i++)
-    {
-        cin >> b[i];
-    }
-    for(int i = 1; i <= n; i++)
-    {
-        f[0][i] = abs(a[i] - b[i]);
-    }
-    for(int l = 1; (1 << l) <= n; l++)
-    {
-        for(int i = 1; i + (1 << l) - 1 <= n; i++)
-        {
-            f[l][i] = __gcd(f[l - 1][i], f[l - 1][i + (1 << l - 1)]);
-        }
-    }
-    while(k--)
-    {
-        int l, r;
-        cin >> l >> r;
-        cout << get(l, r) << "\n";
-    }
     return 0;
 }
 ```
