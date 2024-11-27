@@ -29,7 +29,7 @@ Dưới đây là một số dạng bài toán phổ biến mà segment tree th�
 - Ứng dụng: Câu hỏi yêu cầu đếm số lượng các phần tử thỏa mãn điều kiện nào đó trong một đoạn con của mảng.
 
 ## 7. Cập nhật trong các bài toán khác
-Bài toán: Các bài toán yêu cầu cập nhật một phần tử của mảng sau mỗi truy vấn. Điều này rất phù hợp với việc sử dụng segment tree để cập nhật hiệu quả trong O(log n) thay vì cập nhật trực tiếp toàn bộ mảng.
+- Bài toán: Các bài toán yêu cầu cập nhật một phần tử của mảng sau mỗi truy vấn. Điều này rất phù hợp với việc sử dụng segment tree để cập nhật hiệu quả trong O(log n) thay vì cập nhật trực tiếp toàn bộ mảng.
 
 ## 8. Các bài toán có dạng kết hợp
 - Bài toán: Các bài toán yêu cầu thực hiện nhiều phép toán khác nhau trên các đoạn của mảng, như tìm tổng, tìm giá trị nhỏ nhất hoặc lớn nhất, hoặc kết hợp các kết quả theo một phép toán.
