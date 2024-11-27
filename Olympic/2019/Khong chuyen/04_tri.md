@@ -10,8 +10,6 @@
 
 
 
----
-
 ## Code 1: (Dạng: Min - max trong đoạn định tiến)
 
 ```cpp
