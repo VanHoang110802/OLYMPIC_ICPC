@@ -12,92 +12,102 @@
 
 ---
 
-## Sort + Chặt nhị phân + Sparse table
+## Sort + Chặt nhị phân + Segment tree
 
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
 
-const int INF = 1e9;
-int a[110005];
-int f[110005][20];
-int log_2[110005];
-int n;
+int m, n, k, a[100007], b[100007], dist[100007];
+int ST[500007];
 
-void compute_sparse_table()
+int findMinDiff(int value, int arr[], int size)
 {
-    for(int i = 0; i < n; ++i)
+    int left = 0, right = size - 1;
+    int minDiff = INT_MAX;
+
+    while (left <= right)
     {
-        f[i][0] = a[i];
-    }
-    for(int j = 1; (1 << j) <= n; ++j)
-    {
-        int step = 1 << (j - 1);
-        for(int i = 0; i + 2 * step <= n; ++i)
+        int mid = left + (right - left) / 2;
+        minDiff = min(minDiff, abs(arr[mid] - value));
+        if (arr[mid] < value)
         {
-            f[i][j] = min(f[i][j - 1], f[i + step][j - 1]);
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid - 1;
         }
     }
+    return minDiff;
 }
 
-int minQuery(int l, int r)
+void build(int id, int start, int end)
 {
-    int k = log_2[r - l + 1];
-    return min(f[l][k], f[r - (1 << k) + 1][k]);
-}
-
-void compute_log()
-{
-    log_2[1] = 0;
-    for(int i = 2; i <= n; ++i)
+    if (start == end)
     {
-        log_2[i] = log_2[i / 2] + 1;
+        ST[id] = dist[start];
     }
+    else
+    {
+        int mid = (start + end) / 2;
+        int leftid = 2 * id + 1;
+        int rightid = 2 * id + 2;
+        build(leftid, start, mid);
+        build(rightid, mid + 1, end);
+        ST[id] = min(ST[leftid], ST[rightid]);
+    }
+}
+
+int get(int id, int start, int end, int L, int R)
+{
+    if (R < start || L > end)
+    {
+        return INT_MAX;
+    }
+    if (L <= start && end <= R)
+    {
+        return ST[id];
+    }
+    int mid = (start + end) / 2;
+    int leftid = 2 * id + 1;
+    int rightid = 2 * id + 2;
+    int leftMin = get(leftid, start, mid, L, R);
+    int rightMin = get(rightid, mid + 1, end, L, R);
+    return min(leftMin, rightMin);
 }
 
 int main()
 {
-    int m, k;
-    cin >> n >> m >> k;
-    int b[m];
-    for(int i = 0; i < n; ++i)
+    ios_base::sync_with_stdio(false), cin.tie(0);
+
+    cin >> m >> n >> k;
+    for (int i = 1; i <= m; i++) cin >> a[i];
+    for (int i = 1; i <= n; i++) cin >> b[i];
+
+    sort(b + 1, b + n + 1);
+
+    // Tính khoảng cách nhỏ nhất giữa mỗi phần tử a[i] với mảng b
+    for (int i = 1; i <= m; i++)
     {
-        cin >> a[i];
-    }
-    for(int i = 0; i < m; ++i)
-    {
-        cin >> b[i];
-    }
-    sort(b, b + m);
-    for(int i = 0; i < n; ++i)
-    {
-        int Min = INT_MAX;
-        int j = lower_bound(b, b + m, a[i]) - b;
-        if(j < m)
-        {
-            Min = min(Min, abs(a[i] - b[j]));
-        }
-        j--;
-        if(j >= 0)
-        {
-            Min = min(Min, abs(a[i] - b[j]));
-        }
-        a[i] = Min;
+        dist[i] = findMinDiff(a[i], b + 1, n);
     }
 
-    compute_sparse_table();
-    compute_log();
+    // Xây dựng Segment Tree từ mảng dist
+    build(0, 1, m);
 
-    int l, r;
-    while(k--)
+    while (k--)
     {
+        int l, r;
         cin >> l >> r;
-        l--;
-        r--;
-        cout << minQuery(l, r) << '\n';
+        // Truy vấn giá trị nhỏ nhất trong đoạn [l, r] của mảng dist
+        int res = get(0, 1, m, l, r);
+        cout << res << "\n";
     }
+
     return 0;
 }
+
 ```
 
 ## CTDL + Sparse table
