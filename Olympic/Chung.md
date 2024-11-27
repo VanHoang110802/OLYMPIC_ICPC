@@ -1,9 +1,8 @@
 ## 2019
-1/ Duyệt + Chặt nhị phân + Số học\
-2/ Xử lý số mod + Duyệt\
-3/ Segment tree, Sparse table\
-4/ Min - max trong đoạn định tiến\
-5/ Mảng cộng dồn + Segment tree, Mảng cộng dồn + Chặt nhị phân
+1/ Duyệt + số học\
+2/ Xử lý mũ với mod + duyệt\
+3/ Segment tree + số học\
+4/ Min - max trong đoạn định tiến hoặc mảng cộng dồn + Segment tree
 
 ## 2020
 1/ Toán\
