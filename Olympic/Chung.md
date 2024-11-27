@@ -9,7 +9,7 @@
 2/ Số học\
 3/ Mảng cộng dồn + Mảng hiệu + Chặt nhị phân, Segment tree + Chặt nhị phân\
 4/ ....\
-5/ ....
+5/ QHD + sort
 
 ## 2021
 1/ Duyệt + Số học\
