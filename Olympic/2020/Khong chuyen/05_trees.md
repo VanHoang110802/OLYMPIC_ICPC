@@ -11,7 +11,7 @@
 
 
 
-## Code:
+## Code: (Dạng QHD + sort)
 ```cpp
 #include <iostream>
 #include <algorithm>
