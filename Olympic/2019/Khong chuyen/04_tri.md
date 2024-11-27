@@ -61,62 +61,67 @@ int main()
 ## Code 2: (Dạng: Mảng cộng dồn + segment tree)
 
 ```cpp
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
-long long a[100005], b[100005], st[4 * 100005];
+long long a[100007], pref[100007], seg[420007];
 
-void bt(int id,int l,int r)
+void Build_Seg(int id, int le, int ri)
 {
-    if(l == r)
+    if(le == ri)
     {
-        st[id] = a[l];
+        seg[id] = a[le];
         return;
     }
-    int mid = (l + r) / 2;
-    bt(id * 2, l, mid);
-    bt(id * 2 + 1, mid + 1, r);
-    st[id] = max(st[id * 2], st[id * 2 + 1]);
+
+    int mid = (le + ri) >> 1;
+    Build_Seg(2 * id, le, mid);
+    Build_Seg(2 * id + 1, mid + 1, ri);
+
+    seg[id] = max(seg[2 * id], seg[2 * id + 1]);
 }
 
-long long get(int id, int l, int r, int u, int v)
+long long Get_Seg(int id, int le, int ri, int u, int v)
 {
-    if(u > r || v < l)
+    if(le > v || ri < u)
     {
-        return INT_MIN;
+        return 0LL;
     }
-    if(u <= l && r <= v)
+    if(le >= u && ri <= v)
     {
-        return st[id];
+        return seg[id];
     }
-    int mid = (l + r) / 2;
-    return max(get(id * 2, l, mid, u, v), get(id * 2 + 1, mid + 1, r, u, v));
+
+    int mid = (le + ri) >> 1;
+    long long Get_1 = Get_Seg(2 * id, le, mid, u, v);
+    long long Get_2 = Get_Seg(2 * id + 1, mid + 1, ri, u, v);
+
+    return max(Get_1, Get_2);
 }
 
-int main()
+void XuLy()
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    long long n, i, k, s = 0, l, o;
-    cin >> n >> k;
-    for(i = 1; i <= n; i++)
+    int n, k, cnt = 0; cin >> n >> k;
+    for(int i = 1; i <= n; ++i)
     {
         cin >> a[i];
-        b[i] = b[i - 1] + a[i];
+        pref[i] = pref[i - 1] + a[i];
     }
-    bt(1, 1, n);
-
-    for(i = 1; i<=n-k+1; i++)
+    Build_Seg(1, 1, n);
+    for(int i = 1; i <= n - k + 1; ++i)
     {
-        l = b[i + k - 1] - b[i - 1];
-        o = get(1, 1, n, i, i + k - 1);
-        if(l - o > o)
-        {
-            s++;
-        }
+        long long tmp_1 = pref[i + k - 1] - pref[i - 1];
+        long long tmp_2 = Get_Seg(1, 1, n, i, i + k - 1);
+        if(tmp_1 >= tmp_2 + tmp_2) cnt++;
     }
-    cout << s;
-    return 0;
+    cout << cnt;
 }
 
+int32_t main()
+{
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    XuLy();
+    return 0;
+}
 ```
