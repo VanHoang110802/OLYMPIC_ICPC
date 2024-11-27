@@ -12,7 +12,7 @@
 
 ---
 
-## Min - max trong đoạn định tiến
+## Code 1: (Dạng: Min - max trong đoạn định tiến)
 
 ```cpp
 #include <bits/stdc++.h>
@@ -60,7 +60,7 @@ int main()
 }
 ```
 
-## Mảng cộng dồn + Segment tree
+## Code 2: (Dạng: Mảng cộng dồn + segment tree)
 
 ```cpp
 #include <bits/stdc++.h>
@@ -121,74 +121,4 @@ int main()
     return 0;
 }
 
-```
-
-## Mảng cộng dồn + Chặt nhị phân
-
-```cpp
-#include<bits/stdc++.h>
-using namespace std;
-
-int main()
-{
-#define int long long
-    ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n + 1);
-    vector<long long> pref(n + 1);
-    for(int i = 1; i <= n; i++)
-    {
-        cin >> a[i];
-        pref[i] = pref[i - 1] + a[i];
-    }
-    int ans = 0;
-    for(int i = 1; i <= n - k + 1; i++)
-    {
-        long long sum = pref[i + k - 1] - pref[i - 1];
-        int l = i, r = i + k - 3;
-        int maxa = -1;
-        while(l <= r)
-        {
-            int mid = (l + r) / 2;
-            if(sum > 2 * (pref[mid] - pref[i - 1]))
-            {
-                maxa = mid;
-                l = mid + 1;
-            }
-            else
-            {
-                r = mid - 1;
-            }
-        }
-        if(maxa == -1)
-        {
-            continue;
-        }
-        int maxb = -1;
-        l = maxa + 1, r = i + k - 2;
-        while(l <= r)
-        {
-            int mid = (l + r) / 2;
-            if(sum > 2 * (pref[mid] - pref[maxa]))
-            {
-                maxb = mid;
-                l = mid + 1;
-            }
-            else
-            {
-                r = mid - 1;
-            }
-        }
-        if(maxb == -1)
-        {
-            continue;
-        }
-        if(sum > 2 * (pref[i + k - 1] - pref[maxb]))
-        {
-            ans ++;
-        }
-    }
-    cout << ans;
-}
 ```
