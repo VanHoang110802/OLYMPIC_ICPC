@@ -12,6 +12,7 @@
 
 
 ## Code:
+```cpp
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -62,3 +63,4 @@ signed main()
     XuLy();
     return 0;
 }
+```
