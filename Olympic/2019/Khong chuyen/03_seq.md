@@ -10,7 +10,6 @@
 
 
 
----
 
 ## Code: (Dạng Segment tree + số học)
 
