@@ -31,7 +31,8 @@ void XuLy()
     sort(a, a + m + 2);
     /*
     NX1: mỗi đoạn cần sửa chữa sẽ có 1 trong 2 đầu mút tại vị trí của cây bị hư hỏng
-    NX2: tồn tại 1 vị trí i tại cái cây bị hư hỏng sao cho phần phía trước của i các đoạn sửa chữa thì đổ về phía trước và phần phía sau của i gồm các đoạn đổ về sau
+    NX2: tồn tại 1 vị trí i tại cái cây bị hư hỏng sao cho phần phía trước của i các đoạn sửa chữa thì đổ về phía trước
+         và phần phía sau của i gồm các đoạn đổ về sau
     */
     /// l[i]: số cây ko bị hỏng tối đa nếu các đoạn sửa chữa đổ về phía trước của i
     l[0] = 0;
