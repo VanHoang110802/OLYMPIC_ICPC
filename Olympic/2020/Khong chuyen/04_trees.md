@@ -14,53 +14,57 @@
 ## Code: (Dạng QHD + sort)
 ```cpp
 #include <iostream>
-#include <algorithm>
 using namespace std;
 
-#define int long long
-int a[200007], dpa[200007], dpb[200007];
-int n, m, k;
+int a[200010], l[200010], r[200010];
+int n, k, m, ans = 0;
 
 void XuLy()
 {
     cin >> n >> k >> m;
     for(int i = 1; i <= m; ++i)
-    {
         cin >> a[i];
-    }
-    sort(a + 1, a + m + 1);
-    int gmax = 1000000000000000007;
+    /// thêm vào 2 cây giả bị hư hại tại vị trí 0 và vị trí m+1
+    a[0] = 0;
+    a[m + 1] = n + 1;
+    /// sắp xếp các cây bị hư hại theo vị trí tăng dần
+    sort(a, a + m + 2);
+    /*
+    NX1: mỗi đoạn cần sửa chữa sẽ có 1 trong 2 đầu mút tại vị trí của cây bị hư hỏng
+    NX2: tồn tại 1 vị trí i tại cái cây bị hư hỏng sao cho phần phía trước của i các đoạn sửa chữa thì đổ về phía trước và phần phía sau của i gồm các đoạn đổ về sau
+    */
+    /// l[i]: số cây ko bị hỏng tối đa nếu các đoạn sửa chữa đổ về phía trước của i
+    l[0] = 0;
+    for(int i = 1, j = 0; i <= m; ++i)
     {
-        int id = 1;
-        for(int i = 1; i <= m; i++)
-        {
-            while(a[i] - a[id] + 1 > k)
-            {
-                id++;
-            }
-            dpa[i] = min(dpa[id - 1] + k, a[i]);
-        }
-        id = m;
-        for(int i = m; i >= 1; --i)
-        {
-            while(a[id] - a[i] + 1 > k)
-            {
-                --id;
-            }
-            dpb[i] = min(dpb[id + 1] + k, n - a[i] + 1);
-        }
+        // tìm vị trí j lớn nhất của cây hư hỏng ko thuộc vào đoạn sửa chữa cuối cùng của i
+        while(a[i] - k + 1 > a[j + 1])
+            j++;
+
+        l[i] = l[j] + max(0, a[i] - a[j] - k);
     }
-    for(int i = 1; i <= m + 1; ++i)
+    /// r[i]: số cây ko bị hỏng tối đa nếu các đoạn sửa chữa đổ về phía sau của i
+    r[m + 1] = 0;
+    for(int i = m, j = m + 1; i >= 1; --i)
     {
-        gmax = min(gmax, dpa[i - 1] + dpb[i]);
+        /// tìm vị trí j lớn nhất của cây hư hỏng ko thuộc vào đoạn sửa chữa cuối cùng của i
+        while(a[i] + k - 1 < a[j - 1])
+            j--;
+
+        r[i] = r[j] + max(0, a[j] - a[i]-k);
     }
-    cout << n - gmax;
+    /// ta duyệt mọi vị trí của i (i: 0...m) để tìm KQ tối ưu
+    for(int i = 0; i <= m; i++)
+        ans = max(ans, l[i] + r[i + 1] + a[i + 1] - a[i] - 1);
+
+    cout << ans;
 }
 
-signed main()
+int main()
 {
-    ios_base::sync_with_stdio(false), cin.tie(0);
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     XuLy();
     return 0;
 }
+
 ```
