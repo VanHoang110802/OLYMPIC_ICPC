@@ -13,7 +13,7 @@
 
 ## 2021
 1/ Duyệt + Số học\
-2/ Sort + Chặt nhị phân + Sparse table, CTDL + Sparse table\
+2/ Sort + Chặt nhị phân + Segment tree, CTDL + Sparse table\
 3/ .....\
 4/ CTDL + QHD, Segment tree lazy
 
