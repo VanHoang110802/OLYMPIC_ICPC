@@ -11,7 +11,7 @@
 
 
 
-## Code: (Dạng QHD + sort)
+## Code: (Dạng QHD + sort + hai con trỏ)
 ```cpp
 #include <iostream>
 using namespace std;
