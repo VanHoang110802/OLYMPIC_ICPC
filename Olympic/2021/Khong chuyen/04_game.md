@@ -172,3 +172,57 @@ int main()
 }
 
 ```
+
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+int n;
+ll a[500007], l[500007], r[500007], d;
+
+void solve()
+{
+    cin >> n;
+    for(int i = 1; i <= n; ++i)
+        cin >> a[i];
+
+    stack<int> st;
+    for(int i = 1; i <= n; ++i)
+    {
+        while(!st.empty() and a[st.top()] > a[i])
+            st.pop();
+
+        d = (st.empty() ? 0 : st.top());
+        l[i] = l[d] + (i - d) * a[i];
+        st.push(i);
+    }
+
+    while(!st.empty()) st.pop();
+    for(int i = n; i >= 1; --i)
+    {
+        while(!st.empty() and a[st.top()] > a[i])
+            st.pop();
+
+        d = (st.empty() ? n + 1 : st.top());
+        r[i] = r[d] + (d - i) * a[i];
+        st.push(i);
+    }
+
+    d = LLONG_MIN;
+    for(int i = 1; i <= n; ++i)
+    {
+        d = max(d, l[i] + r[i + 1]);
+    }
+    cout << d;
+}
+
+int32_t main()
+{
+    cin.tie(nullptr)->sync_with_stdio(0);
+    solve();
+    return 0;
+}
+
+```
