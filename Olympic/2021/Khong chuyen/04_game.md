@@ -12,7 +12,7 @@
 
 ---
 
-## CTDL + QHD
+## CTDL (stack đơn điệu) + QHD
 
 ```cpp
 #include <bits/stdc++.h>
