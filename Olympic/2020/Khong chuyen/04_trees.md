@@ -11,7 +11,7 @@
 
 
 
-## Code: (Dạng QHD + sort + hai con trỏ)
+## Code: (Duyệt + chặt nhị phân + xử lý mảng)
 ```cpp
 #include <iostream>
 #include <algorithm>
