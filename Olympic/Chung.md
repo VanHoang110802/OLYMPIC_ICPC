@@ -1,21 +1,21 @@
 ## 2019
 1/ Duyệt + số học\
-2/ Xử lý mũ với mod + duyệt\
+2/ Xử mảng 2 chiều + xử lý mod mũ\
 3/ Segment tree + số học\
-4/ Min - max trong đoạn định tiến hoặc mảng cộng dồn + Segment tree
+4/ Tìm min - max trên đoạn định tiến hoặc mảng cộng dồn + Segment tree
 
 ## 2020
 1/ Toán\
-2/ Số học\
-3/ Mảng cộng dồn + Mảng hiệu + Chặt nhị phân, Segment tree + Chặt nhị phân\
+2/ Xử lý về số học\
+3/ Segment tree + chặt nhị phân hoặc Mảng cộng dồn + Mảng hiệu + Chặt nhị phân\
 4/ ....\
-5/ QHD + sort
+5/ ....
 
 ## 2021
-1/ Duyệt + Số học\
+1/ Xử lý số học\
 2/ Sort + Chặt nhị phân + Segment tree, CTDL + Sparse table\
 3/ .....\
-4/ CTDL + QHD, Segment tree lazy
+4/ Mảng cộng dồn + Stack đơn điệu hoặc Segment tree lazy
 
 ## 2022
 1/ Duyệt + Xử lý mảng (mảng đánh dấu)\
