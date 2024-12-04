@@ -35,58 +35,64 @@
 ## Code: (Dạng QHD + sort + hai con trỏ)
 ```cpp
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-int a[200010], l[200010], r[200010];
-int n, k, m, ans = 0;
+int n, m, k;
+int a[200005];
 
-void XuLy()
+/*
+n: Tổng số tọa độ (chiều dài của đoạn đường).
+m: Số cây bị hư hại.
+k: Chiều dài đoạn robot có thể xử lý mỗi lần.
+a[]: Mảng lưu các tọa độ cây bị hư hại.
+
+- Vì m <= 2.10^5, nên ta sắp xếp các toạ độ là cây bị hư theo thứ tự tăng dần
+- Với k là vị trí đã được cho trước, mà theo đề bài, ta có được dữ kiện là: "Khoảng cách giữa 2 tọa độ liên tiếp cung cấp điều khiển robot không được nhỏ hơn k" -> a[i + 1] - a[i] >= k -> lúc này ta sẽ chặt nhị phân trên mảng a để tìm cái giá trị >= k.
+- Duyệt qua các vị trí từ 1 đến giá trị >= k để kiểm tra xem nếu robot bắt đầu xử lý từ mỗi vị trí như vậy thì số cây không bị hư hại và không bị xử lý là bao nhiêu
+*/
+
+int solve(int x) ///tính số cây không bị hư hại trong một đoạn đường mà robot xử lý từ vị trí st trở đi
 {
-    cin >> n >> k >> m;
-    for(int i = 1; i <= m; ++i)
-        cin >> a[i];
-    /// thêm vào 2 cây giả bị hư hại tại vị trí 0 và vị trí m+1
-    a[0] = 0;
-    a[m + 1] = n + 1;
-    /// sắp xếp các cây bị hư hại theo vị trí tăng dần
-    sort(a, a + m + 2);
-    /*
-    NX1: mỗi đoạn cần sửa chữa sẽ có 1 trong 2 đầu mút tại vị trí của cây bị hư hỏng
-    NX2: tồn tại 1 vị trí i tại cái cây bị hư hỏng sao cho phần phía trước của i các đoạn sửa chữa thì đổ về phía trước
-         và phần phía sau của i gồm các đoạn đổ về sau
-    */
-    /// l[i]: số cây ko bị hỏng tối đa nếu các đoạn sửa chữa đổ về phía trước của i
-    l[0] = 0;
-    for(int i = 1, j = 0; i <= m; ++i)
+    int re = 0;
+    while(x <= m)
     {
-        // tìm vị trí j lớn nhất của cây hư hỏng ko thuộc vào đoạn sửa chữa cuối cùng của i
-        while(a[i] - k + 1 > a[j + 1])
-            j++;
-
-        l[i] = l[j] + max(0, a[i] - a[j] - k);
+        int fi = upper_bound(a + 1, a + m + 1, a[x] + k - 1) - a; /// tìm vị trí đầu tiên trong mảng a[] có giá trị lớn hơn a[st] + k - 1
+                                                          /// tức là tìm tọa độ cây bị hư hại xa nhất mà robot có thể xử lý bắt đầu từ vị trí a[st] và kéo dài trong đoạn dài k.
+        /// fi chính là vị trí của cây bị hư hại sau khi robot xử lý xong đoạn đầu tiên.
+        re = re + min(k, n - a[x] + 1); /// Tính số cây không bị hư hại mà robot xử lý trong đoạn từ vị trí a[st] đến a[st] + k - 1.
+        x = fi;  /// Sau khi xử lý xong một đoạn, robot di chuyển đến vị trí fi để tiếp tục xử lý.
     }
-    /// r[i]: số cây ko bị hỏng tối đa nếu các đoạn sửa chữa đổ về phía sau của i
-    r[m + 1] = 0;
-    for(int i = m, j = m + 1; i >= 1; --i)
-    {
-        /// tìm vị trí j lớn nhất của cây hư hỏng ko thuộc vào đoạn sửa chữa cuối cùng của i
-        while(a[i] + k - 1 < a[j - 1])
-            j--;
-
-        r[i] = r[j] + max(0, a[j] - a[i]-k);
-    }
-    /// ta duyệt mọi vị trí của i (i: 0...m) để tìm KQ tối ưu
-    for(int i = 0; i <= m; i++)
-        ans = max(ans, l[i] + r[i + 1] + a[i + 1] - a[i] - 1);
-
-    cout << ans;
+    return re;
 }
 
 int main()
 {
-    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-    XuLy();
+    cin >> n >> k >> m;
+    for(int i = 1; i <= m; i++)
+        cin >> a[i];
+
+    if(m == 0) /// Nếu không có cây bị hư hại (m == 0), thì không có cây nào cần xử lý, in ra 0 và kết thúc chương trình.
+    {
+        cout << 0;
+        return 0;
+    }
+
+    sort(a + 1, a + m + 1); /// Sắp xếp các tọa độ cây bị hư hại theo thứ tự tăng dần để thuận tiện cho việc xử lý.
+    int tmp = upper_bound(a + 1, a + m + 1, k) - a; /// Tìm vị trí đầu tiên trong mảng a[] có giá trị lớn hơn k. Đây là bước chuẩn bị để tìm ra số cây không bị hư hại mà không bị xử lý nếu robot bắt đầu xử lý từ các tọa độ khác nhau.
+    int ma = -2000000009;
+    for(int i = 1; i <= tmp; i++) /// Duyệt qua các vị trí từ 1 đến tmp để kiểm tra xem nếu robot bắt đầu xử lý từ mỗi vị trí như vậy thì số cây không bị hư hại và không bị xử lý là bao nhiêu. Lưu giá trị tối đa vào ma.
+    {
+        ma = max(ma, n - solve(i) - a[i - 1]);
+    }
+    cout << ma; /// in ra giá trị tối đa ma mà robot không xử lý và không làm hư hại.
     return 0;
 }
+
+
+/*
+1 2 3 4 5 6
+*/
+
 
 ```
