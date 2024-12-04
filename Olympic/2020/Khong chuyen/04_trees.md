@@ -1,27 +1,6 @@
 ## Tiếng Việt
 
-- l[]: Mảng lưu trữ giá trị tối đa cây không hư hại mà robot không xử lý nếu bắt đầu từ cây a[i] và đi về phía bên trái.
 
-- r[]: Mảng lưu trữ giá trị tối đa cây không hư hại mà robot không xử lý nếu bắt đầu từ cây a[i] và đi về phía bên phải. 
-
-- Thêm giá trị 0 vào đầu mảng và n + 1 vào cuối mảng a[]. Điều này là để xử lý các trường hợp biên, giúp robot có thể bắt đầu di chuyển từ vị trí 0 và kết thúc tại vị trí n + 1.
-
-- Tính toán mảng l[]:
-    + Mảng l[i] lưu trữ số lượng cây không bị hư hại mà robot không xử lý nếu robot di chuyển từ vị trí a[i] về phía bên trái.
-    + Cách tính l[i]:
-        + Duyệt qua từng cây bị hư hại từ 1 đến m và sử dụng biến j (được sử dụng như một con trỏ) để tìm vị trí mà robot có thể di chuyển tới mà không gặp cây bị hư hại.
-        + a[i] - k + 1 xác định vị trí mà robot có thể bắt đầu di chuyển.
-        + l[j] lưu trữ số lượng cây không bị hư hại mà robot không xử lý từ vị trí j về phía trước.
-        + max(0, a[i] - a[j] - k) tính toán số cây không bị hư hại trong đoạn từ a[j] đến a[i].
-
-- Tính toán mảng r[]:
-+ Mảng r[i] lưu trữ số lượng cây không bị hư hại mà robot không xử lý nếu robot di chuyển từ vị trí a[i] về phía bên phải.
-+ Quy trình tương tự như mảng l[], nhưng lần này chúng ta di chuyển từ phải sang trái (từ cây bị hư hại cuối cùng đến cây bị hư hại đầu tiên).
-
-- Duyệt qua tất cả các vị trí từ 0 đến m và tính toán giá trị tối ưu cho ans.
-- l[i] + r[i + 1] là tổng số cây không bị hư hại mà robot không xử lý nếu robot bắt đầu từ vị trí a[i] và kết thúc tại vị trí a[i + 1].
-- a[i + 1] - a[i] - 1 tính toán số lượng cây không bị hư hại giữa a[i] và a[i + 1] (không tính các cây bị hư hại).
-- Từ đó, giá trị tối đa ans được tính toán.
 
 ## English
 
