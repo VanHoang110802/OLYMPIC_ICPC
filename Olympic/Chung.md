@@ -8,7 +8,7 @@
 1/ Toán\
 2/ Xử lý về số học\
 3/ Segment tree + chặt nhị phân hoặc Mảng cộng dồn + Mảng hiệu + Chặt nhị phân\
-4/ ....\
+4/ Duyệt + chặt nhị phân + xử lý mảng\
 5/ ....
 
 ## 2021
