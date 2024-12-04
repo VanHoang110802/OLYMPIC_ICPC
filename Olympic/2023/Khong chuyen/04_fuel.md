@@ -125,91 +125,100 @@ int main()
 
 ```cpp
 #include <bits/stdc++.h>
+
 using namespace std;
+int h[100005], v[100005];
+long long sumf[100005], f[100005], sumg[100005], g[100005];
+// f là mảng tính tổng các độ cao dùng prefixsum từ trái sang, g là từ phải sang
+// sumf là mảng tổng lượng nước cho cần tại mỗi cột cũng dùng prefixsum
+// sumf[i] xây dựng bằng cách tìm phần tử lớn nhất gần i nhất bằng stack
+// sau đó tính lượng nước cần từ vị trí đó đến i
+// trong đoạn từ vị trí đó đến i-1 thì tính xem tổng các cột nằm trong bằng bao nhiêu để trừ đi
+long long n, m, k, q;
+stack<int> s;
 
-#define int long long
-int n, m, q;
-int v[100007], h[100007];
-int L[100007], R[100007];
-int sum[100007];
-deque<int> st;
-
-void XuLy()
+int main()
 {
+    ios_base::sync_with_stdio(false), cin.tie(NULL);
     cin >> n >> m;
-    for (int i = 1; i <= n; i++)
+    for(int i = 1; i <= n; i++)
     {
         cin >> v[i];
     }
+    v[0] = 0;
+    v[n+1] = m;
 
-    for (int i = 1; i <= n; i++)
+    for(int i = 1; i <= n; i++)
     {
         cin >> h[i];
-        sum[i] = sum[i - 1] + h[i];
     }
+    h[0] = 100005;
+    h[n+1] = 100005;
 
-    for (int i = 1; i <= n; i++)
+    for(int i = 1; i <= n; i++)
     {
-        while (!st.empty() && h[st.front()] <= h[i])
-        {
-            st.pop_front();
-        }
-
-        if (st.empty())
-        {
-            L[i] = (v[i] - 1) * h[i] - (sum[i - 1] - sum[0]);
-        }
-        else
-        {
-            L[i] = L[st.front()] + (v[i] - v[st.front()] - 1) * h[i] - (sum[i - 1] - sum[st.front()]);
-        }
-
-        st.push_front(i);
+        f[i] = f[i-1] + h[i];
     }
-
-    while (!st.empty())
+    for(int i = n; i > 0; i--)
     {
-        st.pop_front();
+        g[i] = g[i+1] + h[i];
     }
-
-    for (int i = n; i >= 1; i--)
+    s.push(0);
+    for(int i = 1; i <= n; i++)
     {
-        while (!st.empty() && h[st.front()] <= h[i])
+        while(!s.empty() && h[s.top()] < h[i])
         {
-            st.pop_front();
+            s.pop();
         }
-
-        if(st.empty())
-        {
-            R[i] = (m - v[i] - 1) * h[i] - (sum[n] - sum[i]);
-        }
-        else
-        {
-            R[i] = R[st.front()] + (v[st.front()] - v[i] - 1) * h[i] - (sum[st.front() - 1] - sum[i]);
-        }
-
-        st.push_front(i);
+        sumf[i] = sumf[s.top()] + (long long)(v[i] - v[s.top()] - 1) * h[i] - (f[i-1] - f[s.top()]);
+        s.push(i);
     }
-
-    sort(R + 1, R + n + 1);
+    while(!s.empty()) s.pop();
+    s.push(n+1);
+    for(int i = n; i >= 1; i--)
+    {
+        while(!s.empty() && h[s.top()] < h[i])
+        {
+            s.pop();
+        }
+        sumg[i] = sumg[s.top()] + (long long)(v[s.top()] - v[i] - 1) * h[i] - (g[i+1] - g[s.top()]);
+        s.push(i);
+    }
 
     cin >> q;
-    while (q--)
+    while(q--)
     {
-        int k;
         cin >> k;
-        int l = lower_bound(L + 1, L + n + 1, k) - L;
-        int r = lower_bound(R + 1, R + n + 1, k) - R;
-        l--;
-        r--;
-        cout << min(n, l + r) << "\n";
+        int l = 0, r = n;
+        int maxl = 0;
+        while(l <= r)
+        {
+            int mid = (l+r)/2;
+            if(sumf[mid] < k)
+            {
+                maxl = mid;
+                l = mid+1;
+            }
+            else
+                r = mid-1;
+        }
+        int minr = n+1;
+        l = maxl+1;
+        r = n+1;
+        while(l <= r)
+        {
+            int mid = (l+r)/2;
+            if(sumg[mid] < k)
+            {
+                minr = mid;
+                r = mid - 1;
+            }
+            else
+                l = mid + 1;
+        }
+        cout << maxl + n + 1 - minr << "\n";
     }
-}
 
-int32_t main()
-{
-    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-    XuLy();
     return 0;
 }
 
