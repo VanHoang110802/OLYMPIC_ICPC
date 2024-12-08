@@ -15,180 +15,84 @@
 ## Sort + Chặt nhị phân + Segment tree
 
 ```cpp
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
 using namespace std;
 
-int m, n, k, a[100007], b[100007], dist[100007];
-int ST[500007];
+#define int long long
+int a[100007], b[100007], c[100007], seg[500009];
 
-int findMinDiff(int value, int arr[], int size)
+int Tim_Kc_Min(int val, int d[], int size_arr)
 {
-    int left = 0, right = size - 1;
-    int minDiff = INT_MAX;
-
-    while (left <= right)
+    int le = 1, ri = size_arr, kc_min = 2000000009;
+    while(le <= ri)
     {
-        int mid = left + (right - left) / 2;
-        minDiff = min(minDiff, abs(arr[mid] - value));
-        if (arr[mid] < value)
+        int mid = (le + ri) / 2;
+        kc_min = min(kc_min, abs(d[mid] - val));
+        if(d[mid] < val)
         {
-            left = mid + 1;
+            le = mid + 1;
         }
         else
         {
-            right = mid - 1;
+            ri = mid - 1;
         }
     }
-    return minDiff;
+    return kc_min;
 }
 
-void build(int id, int start, int end)
+void Build_Seg(int id, int le, int ri)
 {
-    if (start == end)
+    if(le == ri)
     {
-        ST[id] = dist[start];
+        seg[id] = c[le];
+        return;
     }
-    else
+    int mid = (le + ri) / 2;
+    Build_Seg(2 * id, le, mid);
+    Build_Seg(2 * id + 1, mid + 1, ri);
+
+    seg[id] = min(seg[2 * id], seg[2 * id + 1]);
+}
+
+int Get_Seg(int id, int le, int ri, int u, int v)
+{
+    if(le > v || ri < u)
     {
-        int mid = (start + end) / 2;
-        int leftid = 2 * id + 1;
-        int rightid = 2 * id + 2;
-        build(leftid, start, mid);
-        build(rightid, mid + 1, end);
-        ST[id] = min(ST[leftid], ST[rightid]);
+        return 2000000009;
+    }
+    if(le >= u && ri <= v)
+    {
+        return seg[id];
+    }
+    int mid = (le + ri) / 2;
+    int get_1 = Get_Seg(2 * id, le, mid, u, v);
+    int get_2 = Get_Seg(2 * id + 1, mid + 1, ri, u, v);
+
+    return min(get_1, get_2);
+}
+
+void XuLy()
+{
+    int n, m, k; cin >> n >> m >> k;
+    for(int i = 1; i <= n; ++i) cin >> a[i];
+    for(int i = 1; i <= m; ++i) cin >> b[i];
+    sort(b + 1, b + m + 1);
+    for(int i = 1; i <= n; ++i) c[i] = Tim_Kc_Min(a[i], b, m);
+    Build_Seg(1, 1, n);
+    while(k--)
+    {
+        int l, r; cin >> l >> r;
+        cout << Get_Seg(1, 1, n, l, r) << "\n";
     }
 }
 
-int get(int id, int start, int end, int L, int R)
+int32_t main()
 {
-    if (R < start || L > end)
-    {
-        return INT_MAX;
-    }
-    if (L <= start && end <= R)
-    {
-        return ST[id];
-    }
-    int mid = (start + end) / 2;
-    int leftid = 2 * id + 1;
-    int rightid = 2 * id + 2;
-    int leftMin = get(leftid, start, mid, L, R);
-    int rightMin = get(rightid, mid + 1, end, L, R);
-    return min(leftMin, rightMin);
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(false), cin.tie(0);
-
-    cin >> m >> n >> k;
-    for (int i = 1; i <= m; i++) cin >> a[i];
-    for (int i = 1; i <= n; i++) cin >> b[i];
-
-    sort(b + 1, b + n + 1);
-
-    // Tính khoảng cách nhỏ nhất giữa mỗi phần tử a[i] với mảng b
-    for (int i = 1; i <= m; i++)
-    {
-        dist[i] = findMinDiff(a[i], b + 1, n);
-    }
-
-    // Xây dựng Segment Tree từ mảng dist
-    build(0, 1, m);
-
-    while (k--)
-    {
-        int l, r;
-        cin >> l >> r;
-        // Truy vấn giá trị nhỏ nhất trong đoạn [l, r] của mảng dist
-        int res = get(0, 1, m, l, r);
-        cout << res << "\n";
-    }
-
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    XuLy();
     return 0;
 }
 
-```
-
-## CTDL + Sparse table
-
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
-#define LIFESUCKS ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-#define ll long long
-#define ld long double
-#define ar array
-#define vt vector
-#define pb push_back
-
-const int maxlog = 18;
-int m, n, k;
-ll a[100001];
-ll up[100001][maxlog];
-ll b[100001];
-ll lg[100001];
-vt<ll>da;
-
-void build()
-{
-    for(int i = 0; i  < m; i++)
-    {
-        up[i][0] = da[i];
-    }
-    for(int i = 1; i < maxlog; i++)
-    {
-        for(int j = 0; j  + (1 << i) - 1 < m; j++)
-        {
-            up[j][i] = min(up[j][i - 1], up[j + (1 << (i - 1))][i - 1]);
-        }
-    }
-    lg[1] = 0;
-    for(int i = 2; i <= m; i++)
-    {
-        lg[i] = lg[i/2] + 1;
-    }
-}
-
-ll find(int l, int r)
-{
-    int cr = lg[r - l + 1];
-    return(min(up[l][cr], up[r - (1 << cr) + 1][cr]));
-}
-
-int main()
-{
-    cin >> m >> n >> k;
-    set<ll>s;
-    for(int i = 0; i < m; i++)cin >> a[i];
-    for(int i = 0; i < n; i++)
-    {
-        cin >> b[i];
-        s.insert(b[i]);
-    }
-    for(int i = 0; i < m; i++)
-    {
-        ll cr = 1e9;
-        auto it = s.lower_bound(a[i]);
-        if(it != s.end())
-        {
-            cr = abs(*it - a[i]);
-        }
-        if(it != s.begin())
-        {
-            it--;
-            cr = min(cr, abs(*it - a[i]));
-        }
-        da.pb(cr);
-    }
-    build();
-    for(int i = 0; i < k; i++)
-    {
-        int l, r;
-        cin >> l >> r;
-        cout << find(--l, --r) << "\n";
-    }
-    return 0;
-}
 ```
