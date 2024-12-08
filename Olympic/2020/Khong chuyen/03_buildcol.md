@@ -86,71 +86,95 @@ int main()
 ## Segment tree + Chặt nhị phân
 
 ```cpp
-#include <bits/stdc++.h>
-#define ll long long
-#define x first
-#define y second
+#include <iostream>
+#include <algorithm>
 using namespace std;
-ll m;
-long n,a[100005],f[400005];
-void build(long id, long l, long r)
+
+#define int long long
+int a[100007], seg[410028];
+int n, m, max_cot = -2000000009, min_cot = 2000000009, ans = -1;
+
+void Build_Seg(int id, int le, int ri)
 {
-    if( l == r )
+    if(le == ri)
     {
-        f[id] = a[l];
+        seg[id] = a[le];
         return;
     }
-    long mid = ( l + r ) / 2;
-    build(id*2,l,mid);
-    build(id*2+1,mid+1,r);
-    f[id] = max(f[id*2],f[id*2+1]);
-}
-long get(long id, long l, long r, long u, long v)
-{
-    if( r < u || l > v ) return 0;
-    if( u <= l && r <= v ) return f[id];
-    long mid = ( l + r ) / 2;
-    return max(get(id*2,l,mid,u,v),get(id*2+1,mid+1,r,u,v));
-}
-bool check(long x)
-{
-    ll res = 0;
-    for(long i = 2; i <= n - 1; i++)
-    {
-        long l = get(1,1,n,1,i - 1);
-        long r = get(1,1,n,i + 1,n);
-        if( a[i] > l || a[i] > r ) continue;
-        if( l <= x || r <= x ) continue;
-        //cout << i << ' ' <<  l << ' ' << r << '\n';
-        res += min(l,r) - max(x,a[i]);
-    }
-    //cout << res << '\n';
-    if (res >= m) return true;
-    return false;
-}
-int main()
-{
-    ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
-    cin >> n >> m;
-    for(long i = 1; i <= n; i++) cin >> a[i];
-    build(1,1,n);
-    long l = 0, r = get(1,1,n,1,n), mid = ( l + r ) / 2;
-    //cout << check(2);
-    while( r - l > 3 )
-    {
-        if( check(mid) ) l = mid;
-        else r = mid;
-        mid = ( l + r ) / 2;
-    }
-    for(long i = r; i >= l; i--)
-    {
-        if( check(i) )
-        {
-            cout << i;
-            return 0;
-        }
-    }
-    cout << -1;
+    int mid = (le + ri) / 2;
+    Build_Seg(2 * id, le, mid);
+    Build_Seg(2 * id + 1, mid + 1, ri);
+
+    seg[id] = max(seg[2 * id], seg[2 * id + 1]);
 }
 
+int Get_Seg(int id, int le, int ri, int u, int v)
+{
+    if(le > v || ri < u)
+    {
+        return 0;
+    }
+    if(le >= u && ri <= v)
+    {
+        return seg[id];
+    }
+    int mid = (le + ri) / 2;
+    int get_1 = Get_Seg(2 * id, le, mid, u, v);
+    int get_2 = Get_Seg(2 * id + 1, mid + 1, ri, u, v);
+
+    return max(get_1, get_2);
+}
+
+bool Check(int cot_dang_xet, int dv_nuoc)
+{
+    int sum = 0;
+    /// Tinh tong luong nuoc con dong lai nhu the nao???
+    for(int i = 2; i <= n - 1; ++i)
+    {
+        int day_cot_left = Get_Seg(1, 1, n, 1, i - 1);
+        int day_cot_right = Get_Seg(1, 1, n, i + 1, n);
+
+        day_cot_left = max(day_cot_left, cot_dang_xet);
+        day_cot_right = max(day_cot_right, cot_dang_xet);
+
+        if(max(a[i], cot_dang_xet) < day_cot_left && max(a[i], cot_dang_xet) < day_cot_right)
+        {
+            sum = sum + min(day_cot_left, day_cot_right) - max(a[i], cot_dang_xet);
+        }
+    }
+    return (sum >= dv_nuoc);
+}
+
+void XuLy()
+{
+    cin >> n >> m;
+    for(int i = 1; i <= n; ++i)
+    {
+        cin >> a[i];
+        min_cot = min(min_cot, a[i]);
+        max_cot = max(max_cot, a[i]);
+    }
+    Build_Seg(1, 1, n);
+    while(min_cot <= max_cot)
+    {
+        int mid_cot = (min_cot + max_cot) / 2;
+        if(Check(mid_cot, m))
+        {
+            ans = mid_cot;
+            min_cot = mid_cot + 1;
+        }
+        else
+        {
+            max_cot = mid_cot - 1;
+        }
+    }
+    cout << ans;
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    XuLy();
+    return 0;
+}
 ```
