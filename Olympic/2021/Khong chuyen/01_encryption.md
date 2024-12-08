@@ -23,11 +23,12 @@ using namespace std;
 
 void XuLy()
 {
-    int l, r, a, k; cin >> l >> r >> a >> k;
-    if(a % k == 0) cout << r - l + 1;
+    int l, r, a, k;
+    cin >> l >> r >> a >> k;
+    if(a % k == 0) cout << (r / k) - ((l - 1) / k);
     else
     {
-        if (k % a == 0)
+        if(k % a == 0)
         {
             int tmp = k / a;
             int L = (l - 1) / tmp;
