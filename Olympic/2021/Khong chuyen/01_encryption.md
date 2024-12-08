@@ -15,46 +15,40 @@
 ## Duyệt + Số học
 
 ```cpp
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
-long long s, l, r, a, k;
+#define int long long
 
-int main()
+void XuLy()
 {
-    cin >> l >> r >> a >> k;
-    cout << (r/(k/__gcd(a, k))) - ((l)/(k/__gcd(a, k)));
-    return 0;
-}
-```
-
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
-#define LIFESUCKS ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-#define ll long long
-#define ld long double
-
-ll find(ll a, ll b)
-{
-    while(b != 0)
+    int l, r, a, k; cin >> l >> r >> a >> k;
+    if(a % k == 0) cout << r - l + 1;
+    else
     {
-        ll temp = a % b;
-        a = b;
-        b = temp;
+        if (k % a == 0)
+        {
+            int tmp = k / a;
+            int L = (l - 1) / tmp;
+            int R = r / tmp;
+            cout << R - L;
+        }
+        else
+        {
+            int tmp = k / __gcd(a, k);
+            int L = (l - 1) / tmp;
+            int R = r / tmp;
+            cout << R - L;
+        }
     }
-    return(a);
 }
 
-int main()
+int32_t main()
 {
-    ll l, r, a, k;
-    cin >> l >> r >> a >> k;
-    ll gcd = find(a, k);
-    ll hcf = (((ld)(k) / (ld)(gcd)));
-    ll ans = (floor((ld)r / (ld)hcf) - ceil(((ld)l / (ld)hcf))) + 1;
-    cout << ans;
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    XuLy();
     return 0;
 }
+
 ```
