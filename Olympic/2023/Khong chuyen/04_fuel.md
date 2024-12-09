@@ -43,7 +43,7 @@ void XuLy()
     for(int i = 1; i <= n; ++i) cin >> td_vt[i];
     for(int i = 1; i <= n; ++i) cin >> cc_vt[i];
 
-    /// Tao cac cot gia
+    /// Tao cac cot gia, dam bao se luon luon co cot cao, thap nhat de xet. Tranh loi khi truy cap ngoai pham vi hoac khong tim thay cot phu hop trong stack
     td_vt[0] = 0;
     td_vt[n + 1] = m;
 
