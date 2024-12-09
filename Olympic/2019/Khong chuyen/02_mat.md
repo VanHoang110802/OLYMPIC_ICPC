@@ -12,72 +12,79 @@
 
 ## Code (Dạng: Xử lý mũ với mod + duyệt)
 ```cpp
-#pragma GCC optimize("O3,unroll-loops")
-#pragma GCC target("avx2")
-#include<bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
 using namespace std;
 
-int n, k, row, col;
-long long s, a[110][110], ans[110], c[110];
+#define int long long
+int a[508][508], ans[408940], tmp_sum[408940];
+int k, n, hang, cot, s;
 
-long long multiply_modulo(long long a, long long b)
+int mul_mod(int x, int y)
 {
-    if (b == 0)
+    if(y == 0)
         return 0;
 
-    long long t = multiply_modulo(a, b / 2);
-    t = (t + t) % s;
+    int tmp = mul_mod(x, y / 2);
+    tmp = (tmp + tmp) % s;
 
-    if(b & 1)
-        return t = (t + a) % s;
+    if(y % 2 == 1)
+        return tmp = (tmp + x) % s;
     else
-        return t;
+        return tmp;
 }
 
-int main()
+void XuLy()
 {
-    ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
-    cin >> k >> n >> row >> col >> s;
-    for(int ct = 1; ct <= k; ct++)
+    cin >> k >> n >> hang >> cot >> s;
+    for(int nd = 1; nd <= k; ++nd)
     {
-        for(int i = 1; i <= n; i++)
+        for(int i = 1; i <= n; ++i)
         {
-            for(int j = 1; j <= n; j++)
+            for(int j = 1; j <= n; ++j)
             {
                 cin >> a[i][j];
                 while(a[i][j] < 0)
                 {
-                    a[i][j] += s;
+                    a[i][j] = a[i][j] + s;
                 }
             }
         }
 
-        if(ct == 1)
+        if(nd == 1)
         {
-            for(int i = 1; i <= n; i++)
+            for(int i = 1; i <= n; ++i)
             {
-                ans[i] = a[row][i] % s;
+                ans[i] = a[hang][i] % s;
             }
         }
         else
         {
-            for(int i = 1; i <= n; i++)
+            for(int i = 1; i <= n; ++i)
             {
-                long long sum = 0;
-                for(int j = 1; j <= n; j++)
+                int sum = 0;
+                for(int j = 1; j <= n; ++j)
                 {
-                    sum += multiply_modulo(ans[j], a[j][i]);
-                    sum %= s;
+                    sum = sum + mul_mod(ans[j], a[j][i]);
+                    sum = sum % s;
                 }
-                c[i] = sum;
+                tmp_sum[i] = sum;
             }
-            for(int i = 1; i <= n; i++)
+            for(int i = 1; i <= n; ++i)
             {
-                ans[i] = c[i];
+                ans[i] = tmp_sum[i];
             }
         }
     }
-    cout << ans[col];
+    cout << ans[cot];
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    XuLy();
     return 0;
 }
+
 ```
