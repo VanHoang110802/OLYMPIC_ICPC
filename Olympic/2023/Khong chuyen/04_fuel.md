@@ -147,7 +147,7 @@ int32_t main()
 
 ```
 
-```
+
 Phép tính này dùng để tính giá trị  R[i] , đại diện cho chi phí khi mở rộng từ cột  i  sang bên phải, đến cột cao hơn gần nhất (hoặc cột giả  n+1 ).
 
 Ý nghĩa của từng thành phần
@@ -163,4 +163,4 @@ Phép tính này dùng để tính giá trị  R[i] , đại diện cho chi phí
 		- Tổng chiều cao của các cột nằm giữa  i+1  và  st.top() .
 		- Chi phí (td_vt[st.top()] - td_vt[i] - 1) * cc_vt[i] tính toán vùng trống như là toàn bộ được lấp bởi h[i] , nhưng thực tế các cột giữa đã lấp một phần.
 		Vì vậy, phần  sumR[i + 1] - sumR[st.top()]  được trừ đi để loại bỏ chiều cao thực tế đã được tính giữa  i+1  và  st.top() .
-```
+
