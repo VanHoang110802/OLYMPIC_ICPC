@@ -15,90 +15,84 @@
 ## Duyệt + Xử lý mảng (mảng đánh dấu)
 
 ```cpp
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
-int n, m, h[1005][1005];
-bool seen[1005][1005];
+#define int long long
+int a[1007][1007], n_t[1007][1007];
 
-int main()
+void XuLy()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-
+    int n, m;
     cin >> n >> m;
-    for (int i = 1; i <= n; ++i)
+    for(int i = 1; i <= n; ++i)
     {
-        for (int j = 1; j <= m; ++j)
+        for(int j = 1; j <= m; ++j)
         {
-            cin >> h[i][j];
+            cin >> a[i][j];
         }
     }
-
-    for (int i = 1; i <= n; ++i)
+    for(int i = 1; i <= n; ++i)
     {
+        int check = 0;
+        for(int j = 1; j <= m; ++j)
         {
-            int mx = 0;
-            for (int j = 1; j <= m; ++j)
+            if(check < a[i][j])
             {
-                if (mx < h[i][j])
-                {
-                    mx = h[i][j];
-                    seen[i][j] = true;
-                }
+                check = a[i][j];
+                n_t[i][j] = 1;
             }
         }
 
+        check = 0;
+        for(int j = m; j; --j)
         {
-            int mx = 0;
-            for (int j = m; j >= 1; --j)
+            if(check < a[i][j])
             {
-                if (mx < h[i][j])
-                {
-                    mx = h[i][j];
-                    seen[i][j] = true;
-                }
+                check = a[i][j];
+                n_t[i][j] = 1;
             }
         }
     }
-
-    for (int j = 1; j <= m; ++j)
+    for(int j = 1; j <= m; ++j)
     {
+        int check = 0;
+        for(int i = 1; i <= n; ++i)
         {
-            int mx = 0;
-            for (int i = 1; i <= n; ++i)
+            if(check < a[i][j])
             {
-                if (mx < h[i][j])
-                {
-                    mx = h[i][j];
-                    seen[i][j] = true;
-                }
+                check = a[i][j];
+                n_t[i][j] = 1;
             }
         }
 
+        check = 0;
+        for(int i = n; i; --i)
         {
-            int mx = 0;
-            for (int i = n; i >= 1; --i)
+            if(check < a[i][j])
             {
-                if (mx < h[i][j])
-                {
-                    mx = h[i][j];
-                    seen[i][j] = true;
-                }
+                check = a[i][j];
+                n_t[i][j] = 1;
             }
         }
     }
-
-    int ans = 0;
-    for (int i = 1; i <= n; ++i)
+    int sum = 0;
+    for(int i = 1; i <= n; ++i)
     {
-        for (int j = 1; j <= m; ++j)
+        for(int j = 1; j <= m; ++j)
         {
-            ans += seen[i][j];
+            sum = sum + n_t[i][j];
         }
     }
-    cout << ans << '\n';
+    cout << sum;
+}
 
+int32_t main()
+{
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    XuLy();
     return 0;
 }
+
 ```
