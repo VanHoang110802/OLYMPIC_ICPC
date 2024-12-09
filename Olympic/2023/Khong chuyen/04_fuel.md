@@ -124,101 +124,131 @@ int main()
 ## CTDL + Mảng cộng dồn + Tìm max - min trên đoạn tịnh tiến + Sort + Chặt nhị phân
 
 ```cpp
-#include <bits/stdc++.h>
 
+/* f là mảng tính tổng các độ cao dùng prefixsum từ trái sang, g là từ phải sang
+ sumf là mảng tổng lượng nước cho cần tại mỗi cột cũng dùng prefixsum
+ sumf[i] xây dựng bằng cách tìm phần tử lớn nhất gần i nhất bằng stack
+ sau đó tính lượng nước cần từ vị trí đó đến i
+ trong đoạn từ vị trí đó đến i-1 thì tính xem tổng các cột nằm trong bằng bao nhiêu để trừ đi
+*/
+
+/// Bai nay giong dang bai "next greater element", tinh toan cac khoang cach dua vao cac chieu cao
+
+#include <iostream>
+#include <algorithm>
+#include <stack>
 using namespace std;
-int h[100005], v[100005];
-long long sumf[100005], f[100005], sumg[100005], g[100005];
-// f là mảng tính tổng các độ cao dùng prefixsum từ trái sang, g là từ phải sang
-// sumf là mảng tổng lượng nước cho cần tại mỗi cột cũng dùng prefixsum
-// sumf[i] xây dựng bằng cách tìm phần tử lớn nhất gần i nhất bằng stack
-// sau đó tính lượng nước cần từ vị trí đó đến i
-// trong đoạn từ vị trí đó đến i-1 thì tính xem tổng các cột nằm trong bằng bao nhiêu để trừ đi
-long long n, m, k, q;
-stack<int> s;
 
-int main()
+#define int long long
+
+int v[100005], h[100005], sumL[100005], L[100005], sumR[100005], R[100005];
+int n, m, T;
+stack<int> st; /// su dung stack de tim cac gia tri cot gan nhat co chieu cao lon nhat
+
+void XuLy()
 {
-    ios_base::sync_with_stdio(false), cin.tie(NULL);
     cin >> n >> m;
-    for(int i = 1; i <= n; i++)
-    {
-        cin >> v[i];
-    }
+
+    for(int i = 1; i <= n; ++i) cin >> v[i];
+    for(int i = 1; i <= n; ++i) cin >> h[i];
+
+    /// Tao cac cot gia
     v[0] = 0;
-    v[n+1] = m;
+    v[n + 1] = m;
 
-    for(int i = 1; i <= n; i++)
-    {
-        cin >> h[i];
-    }
     h[0] = 100005;
-    h[n+1] = 100005;
+    h[n + 1] = 100005;
 
-    for(int i = 1; i <= n; i++)
+    for(int i = 1; i <= n; ++i)
     {
-        f[i] = f[i-1] + h[i];
+        sumL[i] = sumL[i - 1] + h[i];
     }
-    for(int i = n; i > 0; i--)
+    for(int i = n; i >= 1; --i)
     {
-        g[i] = g[i+1] + h[i];
-    }
-    s.push(0);
-    for(int i = 1; i <= n; i++)
-    {
-        while(!s.empty() && h[s.top()] < h[i])
-        {
-            s.pop();
-        }
-        sumf[i] = sumf[s.top()] + (long long)(v[i] - v[s.top()] - 1) * h[i] - (f[i-1] - f[s.top()]);
-        s.push(i);
-    }
-    while(!s.empty()) s.pop();
-    s.push(n+1);
-    for(int i = n; i >= 1; i--)
-    {
-        while(!s.empty() && h[s.top()] < h[i])
-        {
-            s.pop();
-        }
-        sumg[i] = sumg[s.top()] + (long long)(v[s.top()] - v[i] - 1) * h[i] - (g[i+1] - g[s.top()]);
-        s.push(i);
+        sumR[i] = sumR[i + 1] + h[i];
     }
 
-    cin >> q;
-    while(q--)
+    /*
+    Tinh tong chi phi tu trai sang phai, su dung stack de xac dinh cot cao nhat gan o ben trai
+    Luc nay L[i] se duoc tinh dua tren:
+    - Khoang cach tu cot cao nhat ben trai den cot hien tai la i
+    - Chi phi duoc dieu chinh bang cach tru tong chieu cao cua 2 cot
+    */
+
+    st.push(0);
+    for(int i = 1; i <= n; ++i)
     {
-        cin >> k;
-        int l = 0, r = n;
-        int maxl = 0;
+        while(!st.empty() && h[st.top()] < h[i])
+        {
+            st.pop();
+        }
+        L[i] = L[st.top()] + (v[i] - v[st.top()] - 1) * h[i] - (sumL[i - 1] - sumL[st.top()]);
+        st.push(i);
+
+    }
+
+    while(!st.empty()) st.pop();
+
+    /*
+    Tinh tong chi phi tu phai sang trai, su dung stack de xac dinh cot cao nhat gan o ben phai
+    Luc nay R[i] se duoc tinh dua tren:
+    - Khoang cach tu cot cao nhat ben phai den cot hien tai la i
+    - Chi phi duoc dieu chinh bang cach tru tong chieu cao cua 2 cot
+    */
+
+    st.push(n + 1);
+    for(int i = n ; i >= 1; --i)
+    {
+        while(!st.empty() && h[st.top()] < h[i])
+        {
+            st.pop();
+        }
+        R[i] = R[st.top()] + (v[st.top()] - v[i] - 1) * h[i] - (sumR[i + 1] - sumR[st.top()] );
+        st.push(i);
+    }
+
+    cin >> T;
+    for(int i = 1; i <= T; ++i)
+    {
+        int k; cin >> k;
+        /// Su dung tknp de tim so luong cot tu trai sang
+        int maxL = 0, l = 0, r = n;
         while(l <= r)
         {
-            int mid = (l+r)/2;
-            if(sumf[mid] < k)
+            int mid = ( l + r ) / 2;
+            if(L[mid] < k)
             {
-                maxl = mid;
-                l = mid+1;
+                maxL = mid;
+                l = mid + 1;
             }
             else
-                r = mid-1;
-        }
-        int minr = n+1;
-        l = maxl+1;
-        r = n+1;
-        while(l <= r)
-        {
-            int mid = (l+r)/2;
-            if(sumg[mid] < k)
             {
-                minr = mid;
                 r = mid - 1;
             }
-            else
-                l = mid + 1;
         }
-        cout << maxl + n + 1 - minr << "\n";
-    }
 
+        /// Su dung tiep tknp de tim so luong cot tu phai sang
+        int minR = n + 1;
+        l = maxL + 1;
+        r = n;
+        while(l <= r)
+        {
+            int mid = (l + r) / 2;
+            if(R[mid] < k)
+            {
+                minR = mid;
+                r = mid - 1;
+            }
+            else l = mid + 1;
+        }
+        cout << (maxL + 1) + (n - minR) << "\n";
+    }
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    XuLy();
     return 0;
 }
 
