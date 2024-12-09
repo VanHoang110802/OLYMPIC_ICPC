@@ -13,7 +13,7 @@ Nếu mà không giao nhau thì l + r < d. Nghĩa là tổng 2 bán kính không
 -> l < d - r.
 
 Nhưng đó chỉ là ta đang xét 1 hình tròn, tức là chỉ có một bó cỏ. Đây đề cho là n bó cỏ. Thì l càng thấp thì bò sẽ càng không ăn được bất
-kì một bó cỏ nào cả. Vậy nên ta chỉ cần tìm min là xong.
+kì một bó cỏ nào cả. Vậy nên ta chỉ cần tìm l sao cho l là giá trị nhỏ nhất là xong.
 
 ## English
 
