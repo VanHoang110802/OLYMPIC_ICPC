@@ -12,116 +12,7 @@
 
 ---
 
-## CTDL + Mảng cộng dồn + Mảng hiệu dồn + Tìm max - min trên đoạn tịnh tiến + chặt nhị phân
-
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-using LL = long long;
-
-int v[100005], h[100005];
-LL sumL[100005], L[100005];
-LL sumR[100005], R[100005];
-int n, m, T;
-stack<int> st;
-
-int main()
-{
-    cin >> n >> m;
-    for(int i = 1; i <= n; ++i)
-    {
-        cin >> v[i];
-    }
-
-    v[0] = 0;
-    v[n + 1] = m;
-
-    for(int i = 1; i <= n; ++i)
-    {
-        cin >> h[i];
-    }
-
-    h[0] = 100005;
-    h[n + 1] = 100005;
-
-    for(int i = 1; i <= n; ++i)
-    {
-        sumL[i] = sumL[i - 1] + h[i];
-    }
-    for(int i = n; i >= 1; --i)
-    {
-        sumR[i] = sumR[i + 1] + h[i];
-    }
-
-    st.push(0);
-    for(int i = 1; i <= n; ++i)
-    {
-        while(!st.empty() && h[st.top()] < h[i])
-        {
-            st.pop();
-        }
-        L[i] = L[st.top()] + (LL)(v[i] - v[st.top()] - 1) * h[i] - (sumL[i - 1] - sumL[st.top()]);
-        st.push(i);
-
-    }
-    while(!st.empty())
-    {
-        st.pop();
-    }
-
-    st.push(n + 1);
-
-    for(int i = n ; i >= 1; --i)
-    {
-        while(!st.empty() && h[st.top()] < h[i])
-        {
-            st.pop();
-        }
-        R[i] = R[st.top()] + (LL)(v[st.top()] - v[i] - 1) * h[i] - (sumR[i + 1] - sumR[st.top()] );
-        st.push(i);
-    }
-
-    cin >> T;
-    for(int i = 1; i <= T; ++i)
-    {
-        LL k;
-        cin >> k;
-        int maxL = 0, l = 0, r = n;
-        while(l <= r)
-        {
-            int mid = ( l + r ) / 2;
-            if(L[mid] < k)
-            {
-                maxL = mid;
-                l = mid + 1;
-            }
-            else
-            {
-                r = mid - 1;
-            }
-        }
-
-        int minR = n + 1;
-        l = maxL + 1;
-        r = n;
-        while(l <= r)
-        {
-            int mid = (l + r) / 2;
-            if(R[mid] < k)
-            {
-                minR = mid;
-                r = mid - 1;
-            }
-            else l = mid + 1;
-        }
-        cout << (maxL + 1) + (n - minR) << "\n";
-    }
-    return 0;
-}
-
-```
-
-## CTDL + Mảng cộng dồn + Tìm max - min trên đoạn tịnh tiến + Sort + Chặt nhị phân
+## Mảng cộng dồn + Stack đơn điệu + Sort + Chặt nhị phân
 
 ```cpp
 
@@ -141,7 +32,7 @@ using namespace std;
 
 #define int long long
 
-int v[100005], h[100005], sumL[100005], L[100005], sumR[100005], R[100005];
+int td_vt[100005], cc_vt[100005], sumL[100005], L[100005], sumR[100005], R[100005];
 int n, m, T;
 stack<int> st; /// su dung stack de tim cac gia tri cot gan nhat co chieu cao lon nhat
 
@@ -149,23 +40,23 @@ void XuLy()
 {
     cin >> n >> m;
 
-    for(int i = 1; i <= n; ++i) cin >> v[i];
-    for(int i = 1; i <= n; ++i) cin >> h[i];
+    for(int i = 1; i <= n; ++i) cin >> td_vt[i];
+    for(int i = 1; i <= n; ++i) cin >> cc_vt[i];
 
     /// Tao cac cot gia
-    v[0] = 0;
-    v[n + 1] = m;
+    td_vt[0] = 0;
+    td_vt[n + 1] = m;
 
-    h[0] = 100005;
-    h[n + 1] = 100005;
+    cc_vt[0] = 100005;
+    cc_vt[n + 1] = 100005;
 
     for(int i = 1; i <= n; ++i)
     {
-        sumL[i] = sumL[i - 1] + h[i];
+        sumL[i] = sumL[i - 1] + cc_vt[i];
     }
     for(int i = n; i >= 1; --i)
     {
-        sumR[i] = sumR[i + 1] + h[i];
+        sumR[i] = sumR[i + 1] + cc_vt[i];
     }
 
     /*
@@ -178,11 +69,11 @@ void XuLy()
     st.push(0);
     for(int i = 1; i <= n; ++i)
     {
-        while(!st.empty() && h[st.top()] < h[i])
+        while(!st.empty() && cc_vt[st.top()] < cc_vt[i])
         {
             st.pop();
         }
-        L[i] = L[st.top()] + (v[i] - v[st.top()] - 1) * h[i] - (sumL[i - 1] - sumL[st.top()]);
+        L[i] = L[st.top()] + (td_vt[i] - td_vt[st.top()] - 1) * cc_vt[i] - (sumL[i - 1] - sumL[st.top()]);
         st.push(i);
 
     }
@@ -199,11 +90,11 @@ void XuLy()
     st.push(n + 1);
     for(int i = n ; i >= 1; --i)
     {
-        while(!st.empty() && h[st.top()] < h[i])
+        while(!st.empty() && cc_vt[st.top()] < cc_vt[i])
         {
             st.pop();
         }
-        R[i] = R[st.top()] + (v[st.top()] - v[i] - 1) * h[i] - (sumR[i + 1] - sumR[st.top()] );
+        R[i] = R[st.top()] + (td_vt[st.top()] - td_vt[i] - 1) * cc_vt[i] - (sumR[i + 1] - sumR[st.top()] );
         st.push(i);
     }
 
