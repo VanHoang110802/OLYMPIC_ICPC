@@ -212,7 +212,29 @@ int main()
 ```
 
 ## clear()
+Erases all elements from the container. After this call, size() returns zero. Invalidates any references, pointers, and iterators referring to contained elements. Any past-the-end iterators are also invalidated.
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
 
+void print_info(string s, const vector<int>& v)
+{
+    cout << s << "{ ";
+    for (const auto& value : v)
+        cout << value << ' ';
+    cout << "}\n";
+    cout << "Size=" << v.size() << ", Capacity=" << v.capacity() << '\n';
+}
+
+int main()
+{
+    vector<int> container{1, 2, 3};
+    print_info("Before clear: ", container);
+    container.clear();
+    print_info("After clear: ", container);
+}
+```
 
 ## insert()
 
