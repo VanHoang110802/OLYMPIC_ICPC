@@ -30,4 +30,16 @@ int main()
 ```
 
 ##
-**assign_range**: assigns a range of values to the container
+**front()**: access the first element
+```cpp
+#include <cassert>
+#include <list>
+ 
+int main()
+{
+    std::list<char> letters{'a', 'b', 'c', 'd'};
+    assert(letters.front() == 'a');
+}
+```
+
+##
