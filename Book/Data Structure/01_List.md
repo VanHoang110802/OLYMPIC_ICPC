@@ -31,7 +31,7 @@ int main()
 ```
 
 ## at()
-access specified element
+Returns a reference to the element at specified location pos, with bounds checking. If pos is not within the range of the container, it reports errors that are consequence of attempt to access elements out of defined range.
 ```cpp
 #include <vector>
 #include <iostream>
@@ -41,8 +41,17 @@ using namespace std;
 int main()
 {
     vector<char> characters{'a', 'b', 'c', 'd', 'e'};
-    characters.at(1) = 'z';
-    cout << characters.at(1);
+    int pos = 10;
+    if(pos >= characters.size())
+    {
+        cout << "error";
+    }
+    else
+    {
+        characters.at(pos) = 'z';
+        cout << characters.at(pos) << "\n";
+        cout << *(characters.begin() + pos) << "\n";
+    }
 }
 
 ```
