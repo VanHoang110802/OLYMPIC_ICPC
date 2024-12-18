@@ -1,3 +1,39 @@
+Input:
+```
+In the first line the N number of commands is given. (1 ≤ N ≤ 1,000,000)
+From the second line over N number of lines one of the following commands is entered.
+push x: Add x to the end of the list.
+get x: Output the xth element in the list.
+size: Output the list size.
+count x: Output the number of x on the list.
+clear: Empty the list.
+
+10
+size
+push 1
+push 2
+get 0
+size
+push 1
+get 2
+count 1
+clear
+count 1
+
+```
+
+Output:
+```
+According to each command express the output value in one line.
+
+0
+1
+2
+1
+2
+0
+```
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
