@@ -39,8 +39,19 @@ access the first element
 int main()
 {
     std::list<char> letters{'a', 'b', 'c', 'd'};
-    assert(letters.front() == 'a');
+    std::cout << letters.front();
 }
 ```
 
-##
+## back()
+access the last element
+```cpp
+#include <cassert>
+#include <list>
+ 
+int main()
+{
+    std::list<char> letters{'a', 'b', 'c', 'd'};
+    std::cout << letters.back();
+}
+```
