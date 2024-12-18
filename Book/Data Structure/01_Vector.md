@@ -180,9 +180,36 @@ int main()
 
 ## empty()
 Checks if the container has no elements, i.e. whether begin() == end().
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    vector<int> numbers;
+    cout << "Initially, numbers.empty(): " << numbers.empty() << '\n';
+
+    numbers.push_back(42);
+    cout << "After adding elements, numbers.empty(): " << numbers.empty() << '\n';
+}
+```
 
 ## size()
 Returns the number of elements in the container, i.e. std::distance(begin(), end()).
+```cpp
+#include <iostream>
+#include <cassert>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    vector<int> nums;
+    if(nums.size()) cout << "vector not empty!";
+    else cout << "vector empty!";
+}
+```
 
 ## max_size()
 Returns the maximum number of elements the container is able to hold due to system or library implementation limitations, i.e. std::distance(begin(), end()) for the largest container.
