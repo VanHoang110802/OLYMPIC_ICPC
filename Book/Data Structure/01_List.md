@@ -1,4 +1,5 @@
-**assigns()**: assigns values to the container
+## assigns()
+assigns values to the container
 ```cpp
 #include <list>
 #include <iostream>
@@ -29,8 +30,8 @@ int main()
 
 ```
 
-##
-**front()**: access the first element
+## front()
+access the first element
 ```cpp
 #include <cassert>
 #include <list>
