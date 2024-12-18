@@ -211,11 +211,22 @@ int main()
 }
 ```
 
-## max_size()
-Returns the maximum number of elements the container is able to hold due to system or library implementation limitations, i.e. std::distance(begin(), end()) for the largest container.
+## clear()
 
-## reserve()
-Increase the capacity of the vector (the total number of elements that the vector can hold without requiring reallocation) to a value that's greater or equal to new_cap. If new_cap is greater than the current capacity(), new storage is allocated, otherwise the function does nothing. reserve() does not change the size of the vector. If new_cap is greater than capacity(), all iterators (including the end() iterator) and all references to the elements are invalidated. Otherwise, no iterators or references are invalidated. After a call to reserve(), insertions will not trigger reallocation unless the insertion would make the size of the vector greater than the value of capacity().
 
-## capacity()
-Returns the number of elements that the container has currently allocated space for.
+## insert()
+
+## emplace()
+
+## erase()
+
+## push_back
+
+## emplace_back()
+
+## pop_back()
+
+## resize()
+
+## swap()
+
