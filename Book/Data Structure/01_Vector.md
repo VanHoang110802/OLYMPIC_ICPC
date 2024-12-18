@@ -237,6 +237,35 @@ int main()
 ```
 
 ## insert()
+Inserts elements at the specified location in the container.
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#define var auto
+
+void print_info(const vector<int>& v)
+{
+    cout << "[ ";
+    for (var value : v)
+        cout << value << " ";
+    cout << "]\n";
+}
+
+int main()
+{
+    vector<int> ner(1, 1);
+    var pos = ner.begin();
+    print_info(ner);
+
+    ner.insert(pos, 2);
+    print_info(ner);
+
+    ner.insert(next(ner.begin(), ner.size()), 3); /// next: Return the nth successor (or -nth predecessor if n is negative) of iterator it.
+    print_info(ner);
+}
+```
 
 ## emplace()
 
