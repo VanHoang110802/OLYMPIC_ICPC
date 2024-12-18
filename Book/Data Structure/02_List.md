@@ -1,3 +1,4 @@
+## Sample
 Input:
 ```
 In the first line the N number of commands is given. (1 ≤ N ≤ 1,000,000)
@@ -34,6 +35,7 @@ According to each command express the output value in one line.
 0
 ```
 
+## C
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -158,4 +160,68 @@ void Free_node(node* current_node)
     free(current_node);
 }
 
+```
+
+## C++
+```cpp
+#include <iostream>
+#include <string>
+#include <list>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    list<int> mylist;
+    for(int i = 1; i <= n; ++i)
+    {
+        string command;
+        cin >> command;
+
+        // push, get, size, count, clear
+        if(command[0] == 'p')
+        {
+            int value;
+            cin >> value;
+            mylist.push_back(value);
+        }
+        else if(command[0] == 'g')
+        {
+            int idx;
+            cin >> idx;
+            list<int>::iterator it = mylist.begin();
+            while(idx--)
+            {
+                it++;
+            }
+            cout << (*it) << "\n";
+        }
+        else if(command[0] == 's')
+        {
+            cout << mylist.size() << "\n";
+        }
+        else if(command[1] == 'o')
+        {
+            int target, cnt = 0;
+            cin >> target;
+            for(list<int>::iterator it = mylist.begin(); it != mylist.end(); it++)
+            {
+                if(*it == target)
+                {
+                    cnt++;
+                }
+            }
+            cout << cnt << "\n";
+        }
+        else
+        {
+            mylist.clear();
+        }
+    }
+
+    return 0;
+}
 ```
