@@ -49,8 +49,7 @@ int main()
     else
     {
         characters.at(pos) = 'z';
-        cout << characters.at(pos) << "\n";
-        cout << *(characters.begin() + pos) << "\n";
+        cout << characters.at(pos) << "\n"; /// <=> cout << *(characters.begin() + pos) << "\n";
     }
 }
 
