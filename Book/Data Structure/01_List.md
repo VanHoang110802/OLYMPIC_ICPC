@@ -72,9 +72,8 @@ int main()
 
 ```
 
-## front
+## front()
 Returns a reference to the first element in the container. Calling front on an empty container causes undefined behavior.
-
 ```cpp
 #include <vector>
 #include <iostream>
@@ -87,5 +86,22 @@ int main()
     vector<char> characters_2;
     cout << characters.front() << "\n";
     cout << characters_2.front() << "\n"; /// error
+}
+```
+
+## back()
+Returns a reference to the last element in the container. Calling back on an empty container causes undefined behavior.
+```cpp
+#include <vector>
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    vector<char> characters{'a', 'b', 'c', 'd', 'e'};
+    vector<char> characters_2;
+    cout << characters.back() << "\n";
+    cout << characters_2.back() << "\n";
 }
 ```
