@@ -1,16 +1,16 @@
-## assigns()
+## assign()
 assigns values to the container
 ```cpp
-#include <list>
+#include <vector>
 #include <iostream>
 #include <string>
 using namespace std;
 
 int main()
 {
-    list<char> characters;
+    vector<char> characters;
 
-    auto print_list = [&]()
+    auto print_vector = [&]()
     {
         for (char c : characters)
             cout << c << ' ';
@@ -18,42 +18,33 @@ int main()
     };
 
     characters.assign(5, 'a');
-    print_list();
+    print_vector();
 
     const string extra(6, 'b');
     characters.assign(extra.begin(), extra.end());
-    print_list();
+    print_vector();
 
     characters.assign({'C', '+', '+', '1', '1'});
-    print_list();
+    print_vector();
 }
 
 ```
 
-## front()
-access the first element
+## at()
+access specified element
 ```cpp
-#include <cassert>
-#include <list>
- 
-int main()
-{
-    std::list<char> letters{'a', 'b', 'c', 'd'};
-    std::cout << letters.front();
-}
-```
+#include <vector>
+#include <iostream>
+#include <string>
+using namespace std;
 
-## back()
-access the last element
-```cpp
-#include <cassert>
-#include <list>
- 
 int main()
 {
-    std::list<char> letters{'a', 'b', 'c', 'd'};
-    std::cout << letters.back();
+    vector<char> characters{'a', 'b', 'c', 'd', 'e'};
+    characters.at(1) = 'z';
+    cout << characters.at(1);
 }
+
 ```
 
 ## begin()
